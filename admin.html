@@ -29,7 +29,7 @@
 </head>
 <body class="bg-obsidian text-[#F7F5F0] antialiased min-h-screen">
 
-    <!-- Login Screen (Hidden if authenticated) -->
+    <!-- Login Screen -->
     <div id="login-overlay" class="fixed inset-0 z-50 bg-obsidian flex items-center justify-center p-4">
         <div class="bg-surface border border-white/10 max-w-md w-full p-8 rounded-2xl shadow-2xl">
             <h2 class="font-serif text-3xl font-bold text-gold mb-2 text-center">7LBSAA-T Admin</h2>
@@ -50,10 +50,8 @@
         </div>
     </div>
 
-    <!-- Main Admin Dashboard Wrapper -->
+    <!-- Admin Dashboard -->
     <div id="admin-dashboard" class="hidden min-h-screen flex flex-col md:flex-row">
-        
-        <!-- Sidebar -->
         <aside class="w-full md:w-64 bg-charcoal border-b md:border-b-0 md:border-l border-white/10 p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between mb-8">
@@ -61,154 +59,92 @@
                     <a href="/" class="text-xs text-gray-400 hover:text-gold"><i class="fa-solid fa-store"></i> المتجر</a>
                 </div>
                 <nav class="space-y-2">
-                    <button onclick="switchTab('overview')" id="tab-overview" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gold text-black font-semibold text-sm transition">
-                        <i class="fa-solid fa-chart-pie"></i> الرئيسية
-                    </button>
-                    <button onclick="switchTab('products')" id="tab-products" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition">
-                        <i class="fa-solid fa-shirt"></i> إدارة المنتجات
-                    </button>
-                    <button onclick="switchTab('orders')" id="tab-orders" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition">
-                        <i class="fa-solid fa-box"></i> إدارة الطلبات
-                    </button>
+                    <button onclick="switchTab('overview')" id="tab-overview" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gold text-black font-semibold text-sm transition"><i class="fa-solid fa-chart-pie"></i> الرئيسية</button>
+                    <button onclick="switchTab('products')" id="tab-products" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition"><i class="fa-solid fa-shirt"></i> المنتجات</button>
+                    <button onclick="switchTab('orders')" id="tab-orders" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition"><i class="fa-solid fa-box"></i> الطلبات</button>
                 </nav>
             </div>
             <div class="pt-6 border-t border-white/10 text-xs text-gray-500">
                 <p id="admin-user-email" class="mb-2 text-white truncate"></p>
-                <button onclick="handleLogout()" class="text-red-400 hover:text-red-300 flex items-center gap-2">
-                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
-                </button>
+                <button onclick="handleLogout()" class="text-red-400 hover:text-red-300 flex items-center gap-2"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="flex-1 p-6 md:p-10 overflow-y-auto">
-            
-            <!-- OVERVIEW TAB -->
+            <!-- Overview -->
             <div id="section-overview" class="space-y-8">
-                <div>
-                    <h2 class="font-serif text-3xl font-bold mb-2">لوحة الإحصائيات</h2>
-                    <p class="text-gray-400 text-sm">نظرة عامة على المبيعات والأداء العام للمتجر.</p>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <h2 class="font-serif text-3xl font-bold mb-2">لوحة الإحصائيات</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div class="bg-surface border border-white/10 p-6 rounded-2xl">
-                        <span class="text-gray-400 text-xs uppercase tracking-wider block mb-2">إجمالي المبيعات المحققة</span>
+                        <span class="text-gray-400 text-xs uppercase block mb-2">إجمالي المبيعات المحققة</span>
                         <h3 id="stat-revenue" class="text-3xl font-bold text-gold">0 EGP</h3>
                     </div>
                     <div class="bg-surface border border-white/10 p-6 rounded-2xl">
-                        <span class="text-gray-400 text-xs uppercase tracking-wider block mb-2">إجمالي المنتجات</span>
+                        <span class="text-gray-400 text-xs uppercase block mb-2">إجمالي المنتجات</span>
                         <h3 id="stat-products" class="text-3xl font-bold text-white">0</h3>
                     </div>
                     <div class="bg-surface border border-white/10 p-6 rounded-2xl">
-                        <span class="text-gray-400 text-xs uppercase tracking-wider block mb-2">إجمالي الطلبات</span>
+                        <span class="text-gray-400 text-xs uppercase block mb-2">إجمالي الطلبات</span>
                         <h3 id="stat-orders" class="text-3xl font-bold text-white">0</h3>
                     </div>
                 </div>
             </div>
 
-            <!-- PRODUCTS TAB -->
+            <!-- Products -->
             <div id="section-products" class="hidden space-y-8">
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="font-serif text-3xl font-bold mb-2">إدارة المنتجات</h2>
-                        <p class="text-gray-400 text-sm">إضافة، تعديل أو حذف المنتجات وتحديث الأسعار فوراً.</p>
-                    </div>
-                    <button onclick="openProductModal()" class="bg-gold hover:bg-gold-dark text-black font-semibold px-6 py-3 rounded transition text-xs uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-plus"></i> إضافة منتج جديد
-                    </button>
+                <div class="flex justify-between items-center">
+                    <h2 class="font-serif text-3xl font-bold">إدارة المنتجات</h2>
+                    <button onclick="openProductModal()" class="bg-gold text-black font-semibold px-6 py-3 rounded text-xs uppercase"><i class="fa-solid fa-plus"></i> إضافة منتج</button>
                 </div>
                 <div class="bg-surface border border-white/10 rounded-2xl overflow-x-auto">
                     <table class="w-full text-right text-sm">
                         <thead class="bg-obsidian/50 border-b border-white/10 text-gray-400 text-xs uppercase">
-                            <tr>
-                                <th class="p-4">المنتج</th>
-                                <th class="p-4">السعر</th>
-                                <th class="p-4">السعر القديم</th>
-                                <th class="p-4">المقاسات</th>
-                                <th class="p-4 text-center">الإجراءات</th>
-                            </tr>
+                            <tr><th class="p-4">المنتج</th><th class="p-4">السعر</th><th class="p-4 text-center">الإجراءات</th></tr>
                         </thead>
-                        <tbody id="products-table-body" class="divide-y divide-white/5">
-                            <!-- Populated dynamically -->
-                        </tbody>
+                        <tbody id="products-table-body" class="divide-y divide-white/5"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- ORDERS TAB -->
+            <!-- Orders -->
             <div id="section-orders" class="hidden space-y-8">
-                <div>
-                    <h2 class="font-serif text-3xl font-bold mb-2">إدارة الطلبات</h2>
-                    <p class="text-gray-400 text-sm">متابعة الطلبات، معاينة صور البطاقات، والتواصل عبر واتساب.</p>
-                </div>
+                <h2 class="font-serif text-3xl font-bold">إدارة الطلبات</h2>
                 <div class="bg-surface border border-white/10 rounded-2xl overflow-x-auto">
                     <table class="w-full text-right text-sm">
                         <thead class="bg-obsidian/50 border-b border-white/10 text-gray-400 text-xs uppercase">
-                            <tr>
-                                <th class="p-4">رقم / العميل</th>
-                                <th class="p-4">الهاتف والمحافظة</th>
-                                <th class="p-4">الإجمالي</th>
-                                <th class="p-4">الحالة</th>
-                                <th class="p-4">البطاقة</th>
-                                <th class="p-4 text-center">الإجراءات</th>
-                            </tr>
+                            <tr><th class="p-4">العميل</th><th class="p-4">الهاتف / العنوان</th><th class="p-4">الإجمالي</th><th class="p-4">الحالة</th><th class="p-4">البطاقة</th><th class="p-4 text-center">واتساب</th></tr>
                         </thead>
-                        <tbody id="orders-table-body" class="divide-y divide-white/5">
-                            <!-- Populated dynamically -->
-                        </tbody>
+                        <tbody id="orders-table-body" class="divide-y divide-white/5"></tbody>
                     </table>
                 </div>
             </div>
-
         </main>
     </div>
 
-    <!-- Product Add/Edit Modal -->
-    <div id="product-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-surface border border-white/10 max-w-lg w-full rounded-2xl p-6 sm:p-8 relative my-8">
-            <button onclick="closeProductModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <h3 id="product-modal-title" class="font-serif text-2xl font-bold text-white mb-6">إضافة منتج جديد</h3>
-            <form id="product-form" onsubmit="saveProduct(event)" class="space-y-4">
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-4">
+        <div class="bg-surface border border-white/10 max-w-lg w-full rounded-2xl p-6 relative">
+            <button onclick="closeProductModal()" class="absolute top-4 left-4 text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-serif text-2xl font-bold text-white mb-6">إضافة / تعديل منتج</h3>
+            <form onsubmit="saveProduct(event)" class="space-y-4">
                 <input type="hidden" id="prod-id">
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">اسم المنتج *</label>
-                    <input type="text" id="prod-name" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">السعر (EGP) *</label>
-                        <input type="number" id="prod-price" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
-                    </div>
-                    <div>
-                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">السعر قبل الخصم</label>
-                        <input type="number" id="prod-old-price" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">مسار الصورة (مثال: t1.jpg أو رابط مباشر) *</label>
-                    <input type="text" id="prod-image" required value="t1.jpg" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">الوصف</label>
-                    <textarea id="prod-desc" rows="2" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-gold hover:bg-gold-dark text-black font-bold py-3.5 rounded transition uppercase tracking-wider text-sm mt-4">
-                    حفظ المنتج
-                </button>
+                <input type="text" id="prod-name" placeholder="اسم المنتج" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white">
+                <input type="number" id="prod-price" placeholder="السعر" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white">
+                <input type="text" id="prod-image" placeholder="صورة المنتج (مثال: t1.jpg)" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white">
+                <button type="submit" class="w-full bg-gold text-black font-bold py-3 rounded uppercase text-sm">حفظ</button>
             </form>
         </div>
     </div>
 
-    <!-- ID Card Preview Modal -->
+    <!-- ID Card Modal -->
     <div id="id-modal" class="fixed inset-0 z-50 bg-black/90 hidden items-center justify-center p-4">
         <div class="relative max-w-2xl w-full">
-            <button onclick="closeIdModal()" class="absolute -top-10 left-0 text-white text-xl hover:text-gold"><i class="fa-solid fa-xmark"></i> إغلاق</button>
-            <img id="id-modal-img" src="" class="w-full rounded-xl border border-gold/40">
+            <button onclick="closeIdModal()" class="absolute -top-10 left-0 text-white"><i class="fa-solid fa-xmark"></i> إغلاق</button>
+            <img id="id-modal-img" class="w-full rounded-xl border border-gold/40">
         </div>
     </div>
 
-    <!-- Firebase SDKs & Admin Logic -->
+    <!-- Firebase Script Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, get, set, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -231,7 +167,6 @@
         let productsList = [];
         let ordersList = [];
 
-        // Auth State
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('login-overlay').classList.add('hidden');
@@ -244,103 +179,114 @@
             }
         });
 
-        window.handleLogin = async function(e) {
+        window.handleLogin = async (e) => {
             e.preventDefault();
-            const email = document.getElementById('admin-email').value;
-            const pass = document.getElementById('admin-password').value;
             try {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch (err) {
-                alert('فشل تسجيل الدخول: ' + err.message);
-            }
-        }
+                await signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-password').value);
+            } catch (err) { alert('فشل الدخول'); }
+        };
 
-        window.handleLogout = async function() {
-            await signOut(auth);
-        }
+        window.handleLogout = () => signOut(auth);
 
-        window.switchTab = function(tab) {
+        window.switchTab = (tab) => {
             ['overview', 'products', 'orders'].forEach(t => {
-                document.getElementById(`section-${t}`).classList.add('hidden'); document.getElementById(`tab-${t}`).className = "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition";
+                document.getElementById(`section-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).className = "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition";
             });
-            document.getElementById(`section-${tab}`).classList.remove('hidden'); document.getElementById(`tab-${tab}`).className = "w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gold text-black font-semibold text-sm transition";
-        }
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).className = "w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gold text-black font-semibold text-sm transition";
+        };
 
         async function loadDashboardData() {
-            // Load Products
             const prodSnap = await get(ref(db, 'products'));
-            if (prodSnap.exists()) {
-                productsList = Object.entries(prodSnap.val()).map(([id, val]) => ({ id, ...val }));
-            } else {
-                productsList = [];
-            }
-            renderProductsTable();
-
-            // Load Orders
+            productsList = prodSnap.exists() ? Object.entries(prodSnap.val()).map(([id, val]) => ({ id, ...val })) : [];
+            
             const ordSnap = await get(ref(db, 'orders'));
-            if (ordSnap.exists()) {
-                ordersList = Object.entries(ordSnap.val()).map(([id, val]) => ({ id, ...val }));
-            } else {
-                ordersList = [];
-            }
-            renderOrdersTable();
-            calculateStats();
-        }
+            ordersList = ordSnap.exists() ? Object.entries(ordSnap.val()).map(([id, val]) => ({ id, ...val })) : [];
 
-        function calculateStats() {
             document.getElementById('stat-products').innerText = productsList.length;
             document.getElementById('stat-orders').innerText = ordersList.length;
+            
+            let rev = 0;
+            ordersList.forEach(o => { if (o.status === 'تم التسليم') rev += Number(o.total || 0); });
+            document.getElementById('stat-revenue').innerText = rev + ' EGP';
 
-            let totalRevenue = 0;
-            ordersList.forEach(o => {
-                if (o.status === 'تم التسليم') {
-                    totalRevenue += Number(o.total || 0);
-                }
-            });
-            document.getElementById('stat-revenue').innerText = totalRevenue + ' EGP';
+            renderProducts();
+            renderOrders();
         }
 
-        function renderProductsTable() {
-            const tbody = document.getElementById('products-table-body');
-            tbody.innerHTML = productsList.map(p => `
+        function renderProducts() {
+            document.getElementById('products-table-body').innerHTML = productsList.map(p => `
                 <tr class="hover:bg-white/5">
                     <td class="p-4 flex items-center gap-3">
                         <img src="${p.image}" class="w-12 h-12 object-cover rounded">
-                        <div>
-                            <div class="font-bold text-white">${p.name}</div>
-                            <div class="text-xs text-gray-400">ID: ${p.id}</div>
-                        </div>
+                        <div><div class="font-bold text-white">${p.name}</div></div>
                     </td>
                     <td class="p-4 text-gold font-bold">${p.price} EGP</td>
-                    <td class="p-4 text-gray-500">${p.oldPrice ? p.oldPrice + ' EGP' : '-'}</td>
-                    <td class="p-4 text-gray-300">${(p.sizes || ['S', 'M', 'L', 'XL']).join(', ')}</td>
                     <td class="p-4 text-center space-x-2 space-x-reverse">
-                        <button onclick="editProduct('${p.id}')" class="text-gold hover:underline text-xs">تعديل</button>
-                        <button onclick="deleteProduct('${p.id}')" class="text-red-400 hover:underline text-xs">حذف</button>
+                        <button onclick="deleteProduct('${p.id}')" class="text-red-400 text-xs">حذف</button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        function renderOrdersTable() {
-            const tbody = document.getElementById('orders-table-body');
-            if (!ordersList.length) {
-                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-gray-500">لا توجد طلبات حتى الآن</td></tr>';
-                return;
-            }
-            tbody.innerHTML = ordersList.map(o => `
+        function renderOrders() {
+            document.getElementById('orders-table-body').innerHTML = ordersList.map(o => `
                 <tr class="hover:bg-white/5">
-                    <td class="p-4">
-                        <div class="font-bold text-white">${o.customerName}</div>
-                        <div class="text-xs text-gray-400">طلب #${o.id.slice(-6)}</div>
-                    </td>
-                    <td class="p-4">
-                        <div>${o.phone}</div>
-                        <div class="text-xs text-gold">${o.governorate} -${o.address}</div>
-                    </td>
+                    <td class="p-4 font-bold text-white">${o.customerName}</td>
+                    <td class="p-4">${o.phone} <span class="text-gold block text-xs">${o.governorate}</span></td>
                     <td class="p-4 font-bold text-gold">${o.total} EGP</td>
                     <td class="p-4">
-                        <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-obsidian border border-white/10 rounded px-2 py-1 text-xs text-white">
+                        <select onchange="updateStatus('${o.id}', this.value)" class="bg-obsidian border border-white/10 rounded px-2 py-1 text-xs text-white">
                             <option value="جديد" ${o.status === 'جديد' ? 'selected' : ''}>جديد</option>
-                            <option value="قيد التجهيز" ${o.status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option>
-                            <option value="تم الشحن" ${o.status === 'تم الش
+                            <option value="تم التسليم" ${o.status === 'تم التسليم' ? 'selected' : ''}>تم التسليم</option>
+                            <option value="ملغي" ${o.status === 'ملغي' ? 'selected' : ''}>ملغي</option>
+                        </select>
+                    </td>
+                    <td class="p-4">${o.idCardUrl ? `<button onclick="showId('${o.idCardUrl}')" class="text-gold underline text-xs">عرض البطاقة</button>` : 'لا توجد'}</td>
+                    <td class="p-4 text-center">
+                        <a href="https://wa.me/2${o.phone.replace(/[^0-9]/g, '')}" target="_blank" class="bg-green-600 text-white px-3 py-1 rounded text-xs"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        window.openProductModal = () => {
+            document.getElementById('product-form').reset();
+            document.getElementById('prod-id').value = 't_' + Date.now();
+            document.getElementById('product-modal').classList.remove('hidden');
+            document.getElementById('product-modal').classList.add('flex');
+        };
+        window.closeProductModal = () => document.getElementById('product-modal').classList.add('hidden');
+
+        window.saveProduct = async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('prod-id').value;
+            await set(ref(db, 'products/' + id), {
+                name: document.getElementById('prod-name').value,
+                price: Number(document.getElementById('prod-price').value),
+                image: document.getElementById('prod-image').value,
+                sizes: ['S', 'M', 'L', 'XL']
+            });
+            closeProductModal();
+            loadDashboardData();
+        };
+
+        window.deleteProduct = async (id) => {
+            if (confirm('حذف المنتج؟')) { await remove(ref(db, 'products/' + id)); loadDashboardData(); }
+        };
+
+        window.updateStatus = async (id, status) => {
+            await update(ref(db, `orders/${id}`), { status });
+            loadDashboardData();
+        };
+
+        window.showId = (url) => {
+            document.getElementById('id-modal-img').src = url;
+            document.getElementById('id-modal').classList.remove('hidden');
+            document.getElementById('id-modal').classList.add('flex');
+        };
+        window.closeId = () => document.getElementById('id-modal').classList.add('hidden');
+    </script>
+</body>
+</html>
