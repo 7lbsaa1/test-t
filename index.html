@@ -42,7 +42,7 @@
     </div>
 
     <!-- Sticky Navigation -->
-    <header class="sticky top-0 z-50 bg-obsidian/90 backdrop-blur-md border-b border-white/15 transition-all duration-300">
+    <header class="sticky top-0 z-50 bg-obsidian/90 backdrop-blur-md border-b border-white/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-6">
                 <a href="/" class="font-serif text-2xl sm:text-3xl font-bold tracking-wider text-gold">
@@ -66,7 +66,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative h-[70vh] flex items-center justify-center text-center overflow-hidden">
+    <section class="relative h-[80vh] flex items-center justify-center text-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <img src="t1.jpg" alt="Hero Background" class="w-full h-full object-cover object-center opacity-30">
             <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/60 to-transparent"></div>
@@ -77,7 +77,7 @@
                 ارتقِ بإطلالتك مع <span class="text-gold">7LBSAA-T</span>
             </h1>
             <p class="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto mb-8 font-light">
-                تشكيلة حصرية من التيشيرتات الفاخرة المصممة خصيصاً للرجل العصري.
+                تشكيلة حصرية من التيشيرتات الفاخرة (من t1 إلى t6) المصممة خصيصاً للرجل العصري.
             </p>
             <a href="#catalog" class="inline-block bg-gold hover:bg-gold-dark text-black font-semibold px-8 py-4 rounded transition tracking-wider text-sm uppercase">
                 تسوق التشكيلة الآن
@@ -104,7 +104,7 @@
         <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </main>
 
-    <!-- Quick View Modal -->
+    <!-- Quick View / Magnifier Modal -->
     <div id="quick-view-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="bg-surface border border-white/10 max-w-3xl w-full rounded-2xl overflow-hidden shadow-2xl relative flex flex-col md:flex-row">
             <button onclick="closeQuickView()" class="absolute top-4 left-4 z-10 text-white bg-black/50 hover:bg-gold hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition">
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <!-- Checkout Modal -->
+    <!-- Checkout Modal (Name, Phone + WhatsApp, Gov, Address, ID Card) -->
     <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
         <div class="bg-surface border border-white/10 max-w-xl w-full rounded-2xl p-6 sm:p-8 relative my-8">
             <button onclick="closeCheckout()" class="absolute top-4 left-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -166,7 +166,7 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">رقم الهاتف (واتساب) *</label>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">رقم الهاتف (عليه واتساب) *</label>
                         <input type="tel" id="cust-phone" required placeholder="010xxxxxxxx" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
                     </div>
                     <div>
@@ -225,12 +225,13 @@
         let selectedProductForModal = null;
         let selectedSizeForModal = '';
 
+        // 6 T-shirts (t1.jpg to t6.jpg) with random prices between 250 and 450 EGP
         const defaultProducts = [
-            { id: 't1', name: 'تيشيرت فلانيل أسلوب ملكي', price: 350, oldPrice: 450, category: 'تيشيرتات', image: 't1.jpg', desc: 'تيشيرت قطن مصري 100% بتصميم فخم ومريح.', sizes: ['S', 'M', 'L', 'XL'] },
-            { id: 't2', name: 'تيشيرت أوربان أسود داكن', price: 290, oldPrice: 380, category: 'تيشيرتات', image: 't2.jpg', desc: 'خامة ثقيلة متينة ومقاومة للبهتان.', sizes: ['M', 'L', 'XL', 'XXL'] },
+            { id: 't1', name: 'تيشيرت فلانيل ملكي', price: 350, oldPrice: 450, category: 'تيشيرتات', image: 't1.jpg', desc: 'قطن مصري نقي 100% بتصميم فخم ومريح.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 't2', name: 'تيشيرت أوربان أسود', price: 290, oldPrice: 380, category: 'تيشيرتات', image: 't2.jpg', desc: 'خامة ثقيلة متينة ومقاومة للبهتان.', sizes: ['M', 'L', 'XL', 'XXL'] },
             { id: 't3', name: 'تيشيرت كلاسيك أيفوري', price: 320, oldPrice: 400, category: 'تيشيرتات', image: 't3.jpg', desc: 'لون أيفوري ملكي يناسب كافة الإطلالات.', sizes: ['S', 'M', 'L'] },
-            { id: 't4', name: 'تيشيرت أوربان شارع مدرن', price: 410, oldPrice: 480, category: 'تيشيرتات', image: 't4.jpg', desc: 'تصميم عصري جريء ومميز.', sizes: ['M', 'L', 'XL'] },
-            { id: 't5', name: 'تيشيرت أثليتيك رياضي فخم', price: 275, oldPrice: 350, category: 'تيشيرتات', image: 't5.jpg', desc: 'مرن للغاية ومناسب للأجواء الحارة.', sizes: ['S', 'M', 'L', 'XL', 'XXL'] },
+            { id: 't4', name: 'تيشيرت شريعة مدرن', price: 410, oldPrice: 480, category: 'تيشيرتات', image: 't4.jpg', desc: 'تصميم عصري جريء ومميز.', sizes: ['M', 'L', 'XL'] },
+            { id: 't5', name: 'تيشيرت أثليتيك رياضي', price: 275, oldPrice: 350, category: 'تيشيرتات', image: 't5.jpg', desc: 'مرن للغاية ومناسب للأجواء الحارة.', sizes: ['S', 'M', 'L', 'XL', 'XXL'] },
             { id: 't6', name: 'تيشيرت فيلور بريميوم', price: 450, oldPrice: 550, category: 'تيشيرتات', image: 't6.jpg', desc: 'قمة الأناقة الرجالية بتفاصيل ذهبية.', sizes: ['M', 'L', 'XL'] }
         ];
 
@@ -271,7 +272,7 @@
                     </div>
                     <div class="p-6 pt-0">
                         <button onclick="openQuickView('${p.id}')" class="w-full border border-gold text-gold hover:bg-gold hover:text-black font-semibold py-2.5 rounded transition text-xs uppercase tracking-wider flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-eye"></i> معاينة سريعة
+                            <i class="fa-solid fa-eye"></i> معاينة (تكبير الصورة)
                         </button>
                     </div>
                 </div>
@@ -309,6 +310,7 @@
             btn.className = "px-4 py-2 border border-gold bg-gold/10 text-gold rounded text-sm font-semibold transition";
         }
 
+        // Hover image magnifier inside quick view modal
         const container = document.getElementById('modal-image-container');
         const img = document.getElementById('modal-img');
         container.addEventListener('mousemove', (e) => {
@@ -316,7 +318,7 @@
             const x = ((e.clientX - rect.left) / container.clientWidth) * 100;
             const y = ((e.clientY - rect.top) / container.clientHeight) * 100;
             img.style.transformOrigin = `${x}% ${y}%`;
-            img.style.transform = 'scale(2)';
+            img.style.transform = 'scale(2.2)';
         });
         container.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
 
@@ -328,8 +330,7 @@
         }
 
         window.toggleCart = function() {
-            const drawer = document.getElementById('cart-drawer');
-            drawer.classList.toggle('-translate-x-full');
+            document.getElementById('cart-drawer').classList.toggle('-translate-x-full');
         }
 
         function updateCartUI() {
@@ -375,13 +376,42 @@
             document.getElementById('checkout-modal').classList.add('hidden');
         }
 
-        // Helper to convert image file to Base64
-        function convertFileToBase64(file) {
-            return new Promise((resolve, reject) => {
+        // Browser-side Image Compression and Base64 conversion workflow
+        function compressImageToBase64(file) {
+            return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
+                reader.onload = (event) => {
+                    const imgElement = new Image();
+                    imgElement.src = event.target.result;
+                    imgElement.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 800;
+                        let width = imgElement.width;
+                        let height = imgElement.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(imgElement, 0, 0, width, height);
+                        
+                        // Compress to JPEG with 0.7 quality and return Base64 string
+                        resolve(canvas.toDataURL('image/jpeg', 0.7));
+                    }
+                }
             });
         }
 
@@ -389,15 +419,16 @@
             e.preventDefault();
             const idFile = document.getElementById('cust-id-card').files[0];
             try {
-                // Compress/Convert to Base64 instantly without Storage
-                const base64Image = await convertFileToBase64(idFile);
+                // 1. Compress image & 2. Convert to Base64 in browser
+                const base64Image = await compressImageToBase64(idFile);
                 
+                // 3. Save directly to Firebase Realtime Database along with order details
                 const newOrder = {
                     customerName: document.getElementById('cust-name').value,
                     phone: document.getElementById('cust-phone').value,
                     governorate: document.getElementById('cust-gov').value,
                     address: document.getElementById('cust-address').value,
-                    idCardUrl: base64Image, // Saved directly in DB as Base64
+                    idCardUrl: base64Image,
                     items: cart,
                     total: cart.reduce((acc, item) => acc + (item.price * item.qty), 0),
                     status: 'جديد',
@@ -405,7 +436,7 @@
                 };
 
                 await push(ref(db, 'orders'), newOrder);
-                alert('تم تأكيد الطلب بنجاح!');
+                alert('تم تأكيد الطلب بنجاح! شكراً لاختيارك 7LBSAA-T');
                 cart = [];
                 updateCartUI();
                 closeCheckout();
