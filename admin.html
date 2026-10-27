@@ -76,7 +76,7 @@
                 <h2 class="font-serif text-3xl font-bold mb-2">لوحة الإحصائيات</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div class="bg-surface border border-white/10 p-6 rounded-2xl">
-                        <span class="text-gray-400 text-xs uppercase block mb-2">إجمالي المبيعات المحققة</span>
+                        <span class="text-gray-400 text-xs uppercase block mb-2">إجمالي المبيعات المحققة (تم التسليم)</span>
                         <h3 id="stat-revenue" class="text-3xl font-bold text-gold">0 EGP</h3>
                     </div>
                     <div class="bg-surface border border-white/10 p-6 rounded-2xl">
@@ -94,7 +94,7 @@
             <div id="section-products" class="hidden space-y-8">
                 <div class="flex justify-between items-center">
                     <h2 class="font-serif text-3xl font-bold">إدارة المنتجات</h2>
-                    <button onclick="openProductModal()" class="bg-gold text-black font-semibold px-6 py-3 rounded text-xs uppercase"><i class="fa-solid fa-plus"></i> إضافة منتج</button>
+                    <button onclick="openProductModal()" class="bg-gold text-black font-semibold px-6 py-3 rounded text-xs uppercase"><i class="fa-solid fa-plus"></i> إضافة منتج جديد</button>
                 </div>
                 <div class="bg-surface border border-white/10 rounded-2xl overflow-x-auto">
                     <table class="w-full text-right text-sm">
@@ -112,7 +112,7 @@
                 <div class="bg-surface border border-white/10 rounded-2xl overflow-x-auto">
                     <table class="w-full text-right text-sm">
                         <thead class="bg-obsidian/50 border-b border-white/10 text-gray-400 text-xs uppercase">
-                            <tr><th class="p-4">العميل</th><th class="p-4">الهاتف / العنوان</th><th class="p-4">الإجمالي</th><th class="p-4">الحالة</th><th class="p-4">البطاقة</th><th class="p-4 text-center">واتساب</th></tr>
+                            <tr><th class="p-4">العميل</th><th class="p-4">الهاتف / المحافظة</th><th class="p-4">الإجمالي</th><th class="p-4">حالة الطلب</th><th class="p-4">البطاقة</th><th class="p-4 text-center">واتساب</th></tr>
                         </thead>
                         <tbody id="orders-table-body" class="divide-y divide-white/5"></tbody>
                     </table>
@@ -129,9 +129,9 @@
             <form onsubmit="saveProduct(event)" class="space-y-4">
                 <input type="hidden" id="prod-id">
                 <input type="text" id="prod-name" placeholder="اسم المنتج" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white">
-                <input type="number" id="prod-price" placeholder="السعر" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white">
+                <input type="number" id="prod-price" placeholder="السعر (من 250 إلى 450)" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white">
                 <input type="text" id="prod-image" placeholder="صورة المنتج (مثال: t1.jpg)" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white">
-                <button type="submit" class="w-full bg-gold text-black font-bold py-3 rounded uppercase text-sm">حفظ</button>
+                <button type="submit" class="w-full bg-gold text-black font-bold py-3 rounded uppercase text-sm">حفظ المنتج</button>
             </form>
         </div>
     </div>
@@ -207,9 +207,14 @@
             document.getElementById('stat-products').innerText = productsList.length;
             document.getElementById('stat-orders').innerText = ordersList.length;
             
-            let rev = 0;
-            ordersList.forEach(o => { if (o.status === 'تم التسليم') rev += Number(o.total || 0); });
-            document.getElementById('stat-revenue').innerText = rev + ' EGP';
+            // Calculate revenue only for delivered orders
+            let totalRevenue = 0;
+            ordersList.forEach(o => { 
+                if (o.status === 'تم التسليم') {
+                    totalRevenue += Number(o.total || 0); 
+                }
+            });
+            document.getElementById('stat-revenue').innerText = totalRevenue + ' EGP';
 
             renderProducts();
             renderOrders();
@@ -220,11 +225,11 @@
                 <tr class="hover:bg-white/5">
                     <td class="p-4 flex items-center gap-3">
                         <img src="${p.image}" class="w-12 h-12 object-cover rounded">
-                        <div><div class="font-bold text-white">${p.name}</div></div>
+                        <div><div class="font-bold text-white">${p.name}</div><div class="text-xs text-gray-400">كود: ${p.id}</div></div>
                     </td>
                     <td class="p-4 text-gold font-bold">${p.price} EGP</td>
                     <td class="p-4 text-center space-x-2 space-x-reverse">
-                        <button onclick="deleteProduct('${p.id}')" class="text-red-400 text-xs">حذف</button>
+                        <button onclick="deleteProduct('${p.id}')" class="text-red-400 hover:underline text-xs">حذف / تعديل</button>
                     </td>
                 </tr>
             `).join('');
@@ -233,19 +238,31 @@
         function renderOrders() {
             document.getElementById('orders-table-body').innerHTML = ordersList.map(o => `
                 <tr class="hover:bg-white/5">
-                    <td class="p-4 font-bold text-white">${o.customerName}</td>
-                    <td class="p-4">${o.phone} <span class="text-gold block text-xs">${o.governorate}</span></td>
+                    <td class="p-4 font-bold text-white">
+                        ${o.customerName}
+                        <div class="text-xs text-gray-400">طلب #${o.id.slice(-6)}</div>
+                    </td>
+                    <td class="p-4">
+                        ${o.phone}
+                        <span class="text-gold block text-xs">${o.governorate} - ${o.address}</span>
+                    </td>
                     <td class="p-4 font-bold text-gold">${o.total} EGP</td>
                     <td class="p-4">
                         <select onchange="updateStatus('${o.id}', this.value)" class="bg-obsidian border border-white/10 rounded px-2 py-1 text-xs text-white">
                             <option value="جديد" ${o.status === 'جديد' ? 'selected' : ''}>جديد</option>
+                            <option value="قيد التجهيز" ${o.status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option>
+                            <option value="تم الشحن" ${o.status === 'تم الشحن' ? 'selected' : ''}>تم الشحن</option>
                             <option value="تم التسليم" ${o.status === 'تم التسليم' ? 'selected' : ''}>تم التسليم</option>
                             <option value="ملغي" ${o.status === 'ملغي' ? 'selected' : ''}>ملغي</option>
                         </select>
                     </td>
-                    <td class="p-4">${o.idCardUrl ? `<button onclick="showId('${o.idCardUrl}')" class="text-gold underline text-xs">عرض البطاقة</button>` : 'لا توجد'}</td>
+                    <td class="p-4">
+                        ${o.idCardUrl ? `<button onclick="showId('${o.idCardUrl}')" class="text-gold underline text-xs">معاينة البطاقة</button>` : 'لا توجد'}
+                    </td>
                     <td class="p-4 text-center">
-                        <a href="https://wa.me/2${o.phone.replace(/[^0-9]/g, '')}" target="_blank" class="bg-green-600 text-white px-3 py-1 rounded text-xs"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
+                        <a href="https://wa.me/2${o.phone.replace(/[^0-9]/g, '')}?text=مرحباً بك يا ${encodeURIComponent(o.customerName)}، بخصوص طلبك من 7LBSAA-T..." target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded text-xs inline-flex items-center gap-1">
+                            <i class="fa-brands fa-whatsapp"></i> واتساب
+                        </a>
                     </td>
                 </tr>
             `).join('');
@@ -273,7 +290,10 @@
         };
 
         window.deleteProduct = async (id) => {
-            if (confirm('حذف المنتج؟')) { await remove(ref(db, 'products/' + id)); loadDashboardData(); }
+            if (confirm('هل أنت متأكد من حذف المنتج؟')) { 
+                await remove(ref(db, 'products/' + id)); 
+                loadDashboardData(); 
+            }
         };
 
         window.updateStatus = async (id, status) => {
