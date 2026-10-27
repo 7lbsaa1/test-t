@@ -42,25 +42,17 @@
     </div>
 
     <!-- Sticky Navigation -->
-    <header class="sticky top-0 z-50 bg-obsidian/90 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+    <header class="sticky top-0 z-50 bg-obsidian/90 backdrop-blur-md border-b border-white/15 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-6">
-                <button id="mobile-menu-btn" class="md:hidden text-xl text-gold focus:outline-none">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
                 <a href="/" class="font-serif text-2xl sm:text-3xl font-bold tracking-wider text-gold">
                     7LBSAA<span class="text-white">-T</span>
                 </a>
             </div>
-
-            <!-- Nav Links -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="#" class="text-gold hover:text-white transition">الرئيسية</a>
                 <a href="#catalog" class="text-gray-300 hover:text-gold transition">التيشيرتات</a>
-                <a href="#features" class="text-gray-300 hover:text-gold transition">مميزاتنا</a>
             </nav>
-
-            <!-- Actions -->
             <div class="flex items-center gap-4">
                 <button onclick="toggleCart()" class="relative p-2 text-gray-300 hover:text-gold transition">
                     <i class="fa-solid fa-bag-shopping text-xl"></i>
@@ -74,24 +66,22 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative h-[80vh] flex items-center justify-center text-center overflow-hidden">
+    <section class="relative h-[70vh] flex items-center justify-center text-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="t1.jpg" alt="Hero Background" class="w-full h-full object-cover object-center opacity-40 scale-105 animate-pulse duration-[10000ms]">
+            <img src="t1.jpg" alt="Hero Background" class="w-full h-full object-cover object-center opacity-30">
             <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/60 to-transparent"></div>
         </div>
         <div class="relative z-10 max-w-4xl mx-auto px-4">
             <span class="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">أناقة رجالية عصرية فاخرة</span>
-            <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-wide text-white">
+            <h1 class="font-serif text-4xl sm:text-6xl font-bold mb-6 tracking-wide text-white">
                 ارتقِ بإطلالتك مع <span class="text-gold">7LBSAA-T</span>
             </h1>
             <p class="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto mb-8 font-light">
-                تشكيلة حصرية من التيشيرتات الفاخرة المصممة خصيصاً للرجل العصري بمقامات وأقمشة فائقة الجودة.
+                تشكيلة حصرية من التيشيرتات الفاخرة المصممة خصيصاً للرجل العصري.
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#catalog" class="w-full sm:w-auto bg-gold hover:bg-gold-dark text-black font-semibold px-8 py-4 rounded transition tracking-wider text-sm uppercase">
-                    تسوق التشكيلة الآن
-                </a>
-            </div>
+            <a href="#catalog" class="inline-block bg-gold hover:bg-gold-dark text-black font-semibold px-8 py-4 rounded transition tracking-wider text-sm uppercase">
+                تسوق التشكيلة الآن
+            </a>
         </div>
     </section>
 
@@ -102,12 +92,8 @@
                 <span class="text-gold uppercase tracking-widest text-xs font-semibold block mb-2">المجموعة المتاحة</span>
                 <h2 class="font-serif text-3xl sm:text-4xl font-bold">تشكيلة التيشيرتات الفاخرة</h2>
             </div>
-            <!-- Search & Filter Controls -->
             <div class="flex flex-wrap items-center gap-4 w-full md:w-auto">
-                <div class="relative flex-1 md:w-64">
-                    <input type="text" id="search-input" placeholder="بحث عن تيشيرت..." class="w-full bg-surface border border-white/10 rounded px-4 py-2.5 text-sm focus:outline-none focus:border-gold text-white placeholder-gray-500">
-                    <i class="fa-solid fa-search absolute left-3 top-3.5 text-gray-500 text-xs"></i>
-                </div>
+                <input type="text" id="search-input" placeholder="بحث عن تيشيرت..." class="bg-surface border border-white/10 rounded px-4 py-2.5 text-sm focus:outline-none focus:border-gold text-white placeholder-gray-500 w-full md:w-64">
                 <select id="sort-select" class="bg-surface border border-white/10 rounded px-4 py-2.5 text-sm focus:outline-none focus:border-gold text-white">
                     <option value="default">الترتيب الافتراضي</option>
                     <option value="price-low">السعر: من الأقل للأعلى</option>
@@ -115,40 +101,10 @@
                 </select>
             </div>
         </div>
-
-        <!-- Product Grid -->
-        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Dynamic Products will load here -->
-        </div>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-charcoal border-t border-white/10 py-12 text-gray-400 text-sm mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-                <h3 class="font-serif text-2xl text-gold font-bold mb-4">7LBSAA-T</h3>
-                <p class="text-gray-400 font-light mb-4">وجهتك الأولى للأزياء الرجالية الراقية والفاخرة في مصر.</p>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4 tracking-wider">روابط سريعة</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-gold transition">الرئيسية</a></li>
-                    <li><a href="#catalog" class="hover:text-gold transition">التيشيرتات</a></li>
-                    <li><a href="/admin" class="hover:text-gold transition">لوحة الإدارة</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4 tracking-wider">خدمة العملاء والدعم</h4>
-                <p class="text-gray-400 mb-2">الدعم عبر واتساب متاح طوال أيام الأسبوع.</p>
-                <p class="text-gold font-semibold">مصر - القاهرة</p>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/5 mt-8 pt-8 text-center text-xs text-gray-500">
-            جميع الحقوق محفوظة &copy; 2026 7LBSAA-T
-        </div>
-    </footer>
-
-    <!-- Quick View / Magnifier Modal -->
+    <!-- Quick View Modal -->
     <div id="quick-view-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="bg-surface border border-white/10 max-w-3xl w-full rounded-2xl overflow-hidden shadow-2xl relative flex flex-col md:flex-row">
             <button onclick="closeQuickView()" class="absolute top-4 left-4 z-10 text-white bg-black/50 hover:bg-gold hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition">
@@ -159,21 +115,18 @@
             </div>
             <div class="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between">
                 <div>
-                    <span id="modal-category" class="text-gold text-xs uppercase tracking-widest font-semibold block mb-1">تيشيرت فاخر</span>
+                    <span class="text-gold text-xs uppercase tracking-widest font-semibold block mb-1">تيشيرت فاخر</span>
                     <h3 id="modal-title" class="font-serif text-2xl font-bold text-white mb-3"></h3>
                     <div class="flex items-center gap-3 mb-4">
                         <span id="modal-price" class="text-xl font-bold text-gold"></span>
                         <span id="modal-old-price" class="text-sm text-gray-500 line-through"></span>
                     </div>
                     <p id="modal-desc" class="text-gray-300 text-sm mb-6 font-light leading-relaxed"></p>
-                    
-                    <!-- Size Selector -->
                     <div class="mb-4">
                         <label class="block text-xs uppercase font-semibold text-gray-400 mb-2">اختر المقاس:</label>
                         <div id="modal-sizes" class="flex flex-wrap gap-2"></div>
                     </div>
                 </div>
-
                 <button onclick="addToCartFromModal()" class="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-3.5 rounded transition uppercase tracking-wider text-sm flex items-center justify-center gap-2">
                     <i class="fa-solid fa-bag-shopping"></i> أضف إلى السلة
                 </button>
@@ -181,19 +134,15 @@
         </div>
     </div>
 
-    <!-- Shopping Cart Drawer -->
+    <!-- Cart Drawer -->
     <div id="cart-drawer" class="fixed inset-y-0 left-0 z-50 w-full sm:w-[420px] bg-obsidian border-r border-white/10 shadow-2xl transform -translate-x-full transition-transform duration-300 flex flex-col">
         <div class="p-6 border-b border-white/10 flex items-center justify-between">
             <h3 class="font-serif text-xl font-bold text-white flex items-center gap-2">
                 <i class="fa-solid fa-bag-shopping text-gold"></i> سلة المشتريات
             </h3>
-            <button onclick="toggleCart()" class="text-gray-400 hover:text-white transition">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
-        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
-            <!-- Cart items populated here -->
-        </div>
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
         <div class="p-6 border-t border-white/10 bg-surface">
             <div class="flex justify-between items-center mb-4 text-sm">
                 <span class="text-gray-400">الإجمالي الفرعي:</span>
@@ -208,9 +157,7 @@
     <!-- Checkout Modal -->
     <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
         <div class="bg-surface border border-white/10 max-w-xl w-full rounded-2xl p-6 sm:p-8 relative my-8">
-            <button onclick="closeCheckout()" class="absolute top-4 left-4 text-gray-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
+            <button onclick="closeCheckout()" class="absolute top-4 left-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="font-serif text-2xl font-bold text-white mb-6">إتمام عملية الشراء</h3>
             <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-4">
                 <div>
@@ -237,12 +184,12 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">العنوان التفصيلي (الشارع / رقم الحارة / المبنى) *</label>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">العنوان التفصيلي *</label>
                     <textarea id="cust-address" required rows="2" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold"></textarea>
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">صورة بطاقة الرقم القومي (تأكيد الطلب) *</label>
-                    <input type="file" id="cust-id-card" accept="image/*" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2 text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-gold file:text-black hover:file:bg-gold-dark cursor-pointer">
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">صورة بطاقة الرقم القومي *</label>
+                    <input type="file" id="cust-id-card" accept="image/*" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2 text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-gold file:text-black cursor-pointer">
                 </div>
                 <div class="pt-4 border-t border-white/10 flex items-center justify-between font-bold text-lg">
                     <span>الإجمالي النهائي:</span>
@@ -255,11 +202,10 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs & App Logic -->
+    <!-- Firebase Script Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, get, set, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAxdGkvwTeZSxkrgVSACgaoYrzaGLlcI0k",
@@ -273,14 +219,12 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const storage = getStorage(app);
 
         let products = [];
         let cart = [];
         let selectedProductForModal = null;
         let selectedSizeForModal = '';
 
-        // Default 6 T-shirts if DB is empty
         const defaultProducts = [
             { id: 't1', name: 'تيشيرت فلانيل أسلوب ملكي', price: 350, oldPrice: 450, category: 'تيشيرتات', image: 't1.jpg', desc: 'تيشيرت قطن مصري 100% بتصميم فخم ومريح.', sizes: ['S', 'M', 'L', 'XL'] },
             { id: 't2', name: 'تيشيرت أوربان أسود داكن', price: 290, oldPrice: 380, category: 'تيشيرتات', image: 't2.jpg', desc: 'خامة ثقيلة متينة ومقاومة للبهتان.', sizes: ['M', 'L', 'XL', 'XXL'] },
@@ -297,14 +241,12 @@
                     products = Object.entries(snapshot.val()).map(([id, val]) => ({ id, ...val }));
                 } else {
                     products = defaultProducts;
-                    // Seed initial products
                     for(let p of defaultProducts) {
                         await set(ref(db, 'products/' + p.id), p);
                     }
                 }
                 renderProducts(products);
             } catch (err) {
-                console.error(err);
                 products = defaultProducts;
                 renderProducts(products);
             }
@@ -312,25 +254,19 @@
 
         window.renderProducts = function(list) {
             const grid = document.getElementById('products-grid');
-            if (!list.length) {
-                grid.innerHTML = '<p class="col-span-full text-center text-gray-400 py-12">لا توجد منتجات مطابقة للبحث</p>';
-                return;
-            }
             grid.innerHTML = list.map(p => `
                 <div class="bg-surface border border-white/10 rounded-2xl overflow-hidden group flex flex-col justify-between">
                     <div>
                         <div class="relative h-72 overflow-hidden bg-obsidian">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                            <div class="absolute top-3 right-3 bg-gold text-black text-xs font-bold px-3 py-1 rounded">متاح</div>
                         </div>
                         <div class="p-6">
-                            <span class="text-gold text-xs uppercase tracking-wider font-semibold block mb-1">${p.category || 'تيشيرت'}</span>
+                            <span class="text-gold text-xs uppercase tracking-wider font-semibold block mb-1">تيشيرت</span>
                             <h3 class="font-serif text-xl font-bold text-white mb-2">${p.name}</h3>
                             <div class="flex items-center gap-3 mb-4">
                                 <span class="text-gold font-bold text-lg">${p.price} EGP</span>
                                 ${p.oldPrice ? `<span class="text-gray-500 text-sm line-through">${p.oldPrice} EGP</span>` : ''}
                             </div>
-                            <p class="text-gray-400 text-xs line-clamp-2 font-light">${p.desc || ''}</p>
                         </div>
                     </div>
                     <div class="p-6 pt-0">
@@ -344,19 +280,15 @@
 
         window.openQuickView = function(id) {
             selectedProductForModal = products.find(p => p.id === id);
-            if (!selectedProductForModal) return;
-            
             document.getElementById('modal-title').innerText = selectedProductForModal.name;
             document.getElementById('modal-price').innerText = selectedProductForModal.price + ' EGP';
             document.getElementById('modal-old-price').innerText = selectedProductForModal.oldPrice ? selectedProductForModal.oldPrice + ' EGP' : '';
             document.getElementById('modal-desc').innerText = selectedProductForModal.desc || '';
             document.getElementById('modal-img').src = selectedProductForModal.image;
             
-            const sizesDiv = document.getElementById('modal-sizes');
             const sizes = selectedProductForModal.sizes || ['S', 'M', 'L', 'XL'];
             selectedSizeForModal = sizes[0];
-            
-            sizesDiv.innerHTML = sizes.map((s, i) => `
+            document.getElementById('modal-sizes').innerHTML = sizes.map((s, i) => `
                 <button onclick="selectSize('${s}', this)" class="px-4 py-2 border ${i === 0 ? 'border-gold bg-gold/10 text-gold' : 'border-white/20 text-gray-300'} rounded text-sm font-semibold transition">
                     ${s}
                 </button>
@@ -373,13 +305,10 @@
 
         window.selectSize = function(size, btn) {
             selectedSizeForModal = size;
-            Array.from(btn.parentElement.children).forEach(b => {
-                b.className = "px-4 py-2 border border-white/20 text-gray-300 rounded text-sm font-semibold transition";
-            });
+            Array.from(btn.parentElement.children).forEach(b => b.className = "px-4 py-2 border border-white/20 text-gray-300 rounded text-sm font-semibold transition");
             btn.className = "px-4 py-2 border border-gold bg-gold/10 text-gold rounded text-sm font-semibold transition";
         }
 
-        // Magnifier lens setup
         const container = document.getElementById('modal-image-container');
         const img = document.getElementById('modal-img');
         container.addEventListener('mousemove', (e) => {
@@ -389,25 +318,10 @@
             img.style.transformOrigin = `${x}% ${y}%`;
             img.style.transform = 'scale(2)';
         });
-        container.addEventListener('mouseleave', () => {
-            img.style.transform = 'scale(1)';
-        });
+        container.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
 
         window.addToCartFromModal = function() {
-            if (!selectedProductForModal) return;
-            const existing = cart.find(item => item.id === selectedProductForModal.id && item.size === selectedSizeForModal);
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({
-                    id: selectedProductForModal.id,
-                    name: selectedProductForModal.name,
-                    price: selectedProductForModal.price,
-                    image: selectedProductForModal.image,
-                    size: selectedSizeForModal,
-                    qty: 1
-                });
-            }
+            cart.push({ ...selectedProductForModal, size: selectedSizeForModal, qty: 1 });
             updateCartUI();
             closeQuickView();
             toggleCart();
@@ -415,24 +329,18 @@
 
         window.toggleCart = function() {
             const drawer = document.getElementById('cart-drawer');
-            if (drawer.classList.contains('-translate-x-full')) {
-                drawer.classList.remove('-translate-x-full');
-            } else {
-                drawer.classList.add('-translate-x-full');
-            }
+            drawer.classList.toggle('-translate-x-full');
         }
 
         function updateCartUI() {
             document.getElementById('cart-badge').innerText = cart.reduce((acc, item) => acc + item.qty, 0);
             const container = document.getElementById('cart-items-container');
             let subtotal = 0;
-
             if (!cart.length) {
                 container.innerHTML = '<p class="text-center text-gray-500 py-12">سلة المشتريات فارغة</p>';
                 document.getElementById('cart-subtotal').innerText = '0 EGP';
                 return;
             }
-
             container.innerHTML = cart.map((item, idx) => {
                 subtotal += item.price * item.qty;
                 return `
@@ -441,26 +349,12 @@
                         <div class="flex-1">
                             <h4 class="font-bold text-sm text-white">${item.name}</h4>
                             <p class="text-xs text-gold">المقاس: ${item.size} | السعر: ${item.price} EGP</p>
-                            <div class="flex items-center gap-2 mt-2">
-                                <button onclick="updateQty(${idx}, -1)" class="w-6 h-6 bg-surface rounded text-white text-xs">-</button>
-                                <span class="text-xs text-white">${item.qty}</span>
-                                <button onclick="updateQty(${idx}, 1)" class="w-6 h-6 bg-surface rounded text-white text-xs">+</button>
-                            </div>
                         </div>
-                        <button onclick="removeItem(${idx})" class="text-red-400 hover:text-red-300 text-sm">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+                        <button onclick="removeItem(${idx})" class="text-red-400 text-sm"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
             }).join('');
-
             document.getElementById('cart-subtotal').innerText = subtotal + ' EGP';
-        }
-
-        window.updateQty = function(idx, change) {
-            cart[idx].qty += change;
-            if (cart[idx].qty <= 0) cart.splice(idx, 1);
-            updateCartUI();
         }
 
         window.removeItem = function(idx) {
@@ -469,12 +363,8 @@
         }
 
         window.openCheckout = function() {
-            if (!cart.length) {
-                alert('سلة المشتريات فارغة');
-                return;
-            }
-            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-            document.getElementById('checkout-total').innerText = subtotal + ' EGP';
+            if (!cart.length) return alert('سلة المشتريات فارغة');
+            document.getElementById('checkout-total').innerText = cart.reduce((acc, item) => acc + (item.price * item.qty), 0) + ' EGP';
             document.getElementById('checkout-modal').classList.remove('hidden');
             document.getElementById('checkout-modal').classList.add('flex');
             toggleCart();
@@ -485,65 +375,45 @@
             document.getElementById('checkout-modal').classList.add('hidden');
         }
 
+        // Helper to convert image file to Base64
+        function convertFileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
         window.submitOrder = async function(e) {
             e.preventDefault();
-            const name = document.getElementById('cust-name').value;
-            const phone = document.getElementById('cust-phone').value;
-            const gov = document.getElementById('cust-gov').value;
-            const address = document.getElementById('cust-address').value;
             const idFile = document.getElementById('cust-id-card').files[0];
-
-            if (!idFile) {
-                alert('يرجى رفع صورة بطاقة الرقم القومي لتأكيد الطلب');
-                return;
-            }
-
             try {
-                const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+                // Compress/Convert to Base64 instantly without Storage
+                const base64Image = await convertFileToBase64(idFile);
                 
-                // Upload ID Card to Firebase Storage
-                const storageReference = sRef(storage, `id_cards/${Date.now()}_${idFile.name}`);
-                await uploadBytes(storageReference, idFile);
-                const idCardUrl = await getDownloadURL(storageReference);
-
                 const newOrder = {
-                    customerName: name,
-                    phone: phone,
-                    governorate: gov,
-                    address: address,
-                    idCardUrl: idCardUrl,
+                    customerName: document.getElementById('cust-name').value,
+                    phone: document.getElementById('cust-phone').value,
+                    governorate: document.getElementById('cust-gov').value,
+                    address: document.getElementById('cust-address').value,
+                    idCardUrl: base64Image, // Saved directly in DB as Base64
                     items: cart,
-                    total: subtotal,
+                    total: cart.reduce((acc, item) => acc + (item.price * item.qty), 0),
                     status: 'جديد',
                     createdAt: new Date().toISOString()
                 };
 
                 await push(ref(db, 'orders'), newOrder);
-
-                alert('تم تأكيد الطلب بنجاح! شكراً لاختيارك 7LBSAA-T');
+                alert('تم تأكيد الطلب بنجاح!');
                 cart = [];
                 updateCartUI();
                 closeCheckout();
                 document.getElementById('checkout-form').reset();
             } catch (err) {
-                console.error(err);
-                alert('حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.');
+                alert('حدث خطأ أثناء إرسال الطلب.');
             }
         }
-
-        // Search & Filter listeners
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-            renderProducts(filtered);
-        });
-
-        document.getElementById('sort-select').addEventListener('change', (e) => {
-            let sorted = [...products];
-            if (e.target.value === 'price-low') sorted.sort((a, b) => a.price - b.price);
-            if (e.target.value === 'price-high') sorted.sort((a, b) => b.price - a.price);
-            renderProducts(sorted);
-        });
 
         loadProducts();
     </script>
