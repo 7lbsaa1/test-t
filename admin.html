@@ -3,179 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7lbsaa-t | لوحة تحكم الأدمن</title>
-    <!-- Tailwind CSS -->
+    <title>لوحة التحكم | 7LBSAA-T Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        gold: '#D4AF37',
-                        brandDark: '#0A0A0C',
-                        brandCard: '#121216',
-                        brandAccent: '#FF3366'
+                        gold: { DEFAULT: '#B79B69', dark: '#9A7D4A', light: '#D4BC8E' },
+                        obsidian: '#0d0d0d',
+                        charcoal: '#1a1a1a',
+                        surface: '#222222'
                     },
                     fontFamily: {
-                        sans: ['Cairo', 'sans-serif']
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif']
                     }
                 }
             }
         }
     </script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Cairo', sans-serif; }
-    </style>
 </head>
-<body class="bg-brandDark text-slate-100 min-h-screen">
+<body class="bg-obsidian text-[#F7F5F0] antialiased min-h-screen">
 
-    <!-- Login Screen Modal -->
-    <div id="loginScreen" class="fixed inset-0 z-50 bg-brandDark flex items-center justify-center p-4">
-        <div class="bg-brandCard w-full max-w-sm rounded-3xl p-8 border border-slate-800 shadow-2xl text-center">
-            <div class="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center font-black text-black text-3xl mx-auto mb-4">7</div>
-            <h2 class="text-2xl font-black mb-2">تسجيل دخول الأدمن</h2>
-            <p class="text-xs text-slate-400 mb-6">أدخل كلمة المرور للدخول إلى لوحة التحكم (الافتراضية: 7lbsaa2026)</p>
-            
-            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-                <input type="password" id="adminPasscode" required placeholder="كلمة المرور" class="w-full bg-brandDark border border-slate-700 rounded-xl p-3 text-center text-sm font-bold focus:outline-none focus:border-amber-500">
-                <button type="submit" class="w-full py-3 bg-amber-500 text-black font-extrabold rounded-xl text-xs">دخول اللوحة</button>
+    <!-- Login Screen (Hidden if authenticated) -->
+    <div id="login-overlay" class="fixed inset-0 z-50 bg-obsidian flex items-center justify-center p-4">
+        <div class="bg-surface border border-white/10 max-w-md w-full p-8 rounded-2xl shadow-2xl">
+            <h2 class="font-serif text-3xl font-bold text-gold mb-2 text-center">7LBSAA-T Admin</h2>
+            <p class="text-gray-400 text-xs text-center mb-6 uppercase tracking-wider">تسجيل دخول لوحة الإدارة الآمنة</p>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">البريد الإلكتروني</label>
+                    <input type="email" id="admin-email" required value="admin@7lbsaa.com" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">كلمة المرور</label>
+                    <input type="password" id="admin-password" required value="7lbsaa2026" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
+                </div>
+                <button type="submit" class="w-full bg-gold hover:bg-gold-dark text-black font-bold py-3.5 rounded transition uppercase tracking-wider text-sm mt-4">
+                    دخول اللوحة
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- Main Dashboard -->
-    <div id="dashboardApp" class="hidden">
+    <!-- Main Admin Dashboard Wrapper -->
+    <div id="admin-dashboard" class="hidden min-h-screen flex flex-col md:flex-row">
         
-        <!-- Header / Revenue Stats -->
-        <header class="bg-brandCard border-b border-slate-800 p-4 sticky top-0 z-30">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center font-black text-black text-xl">7</div>
-                    <span class="text-xl font-extrabold">لوحة تحكم 7lbsaa-t</span>
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 bg-charcoal border-b md:border-b-0 md:border-l border-white/10 p-6 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-8">
+                    <h1 class="font-serif text-2xl font-bold text-gold">7LBSAA-T</h1>
+                    <a href="/" class="text-xs text-gray-400 hover:text-gold"><i class="fa-solid fa-store"></i> المتجر</a>
                 </div>
+                <nav class="space-y-2">
+                    <button onclick="switchTab('overview')" id="tab-overview" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gold text-black font-semibold text-sm transition">
+                        <i class="fa-solid fa-chart-pie"></i> الرئيسية
+                    </button>
+                    <button onclick="switchTab('products')" id="tab-products" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition">
+                        <i class="fa-solid fa-shirt"></i> إدارة المنتجات
+                    </button>
+                    <button onclick="switchTab('orders')" id="tab-orders" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition">
+                        <i class="fa-solid fa-box"></i> إدارة الطلبات
+                    </button>
+                </nav>
+            </div>
+            <div class="pt-6 border-t border-white/10 text-xs text-gray-500">
+                <p id="admin-user-email" class="mb-2 text-white truncate"></p>
+                <button onclick="handleLogout()" class="text-red-400 hover:text-red-300 flex items-center gap-2">
+                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+                </button>
+            </div>
+        </aside>
 
-                <!-- Financial Counter -->
-                <div class="bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 border border-amber-500/30 rounded-2xl px-6 py-2 flex items-center gap-4">
-                    <i class="fas fa-wallet text-amber-500 text-2xl"></i>
-                    <div>
-                        <span class="block text-[10px] text-slate-400 font-bold">إجمالي المبيعات المحصلة (تم التسليم)</span>
-                        <span id="currentRevenueCounter" class="text-2xl font-black text-amber-500">0 ج.م</span>
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+            
+            <!-- OVERVIEW TAB -->
+            <div id="section-overview" class="space-y-8">
+                <div>
+                    <h2 class="font-serif text-3xl font-bold mb-2">لوحة الإحصائيات</h2>
+                    <p class="text-gray-400 text-sm">نظرة عامة على المبيعات والأداء العام للمتجر.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-surface border border-white/10 p-6 rounded-2xl">
+                        <span class="text-gray-400 text-xs uppercase tracking-wider block mb-2">إجمالي المبيعات المحققة</span>
+                        <h3 id="stat-revenue" class="text-3xl font-bold text-gold">0 EGP</h3>
+                    </div>
+                    <div class="bg-surface border border-white/10 p-6 rounded-2xl">
+                        <span class="text-gray-400 text-xs uppercase tracking-wider block mb-2">إجمالي المنتجات</span>
+                        <h3 id="stat-products" class="text-3xl font-bold text-white">0</h3>
+                    </div>
+                    <div class="bg-surface border border-white/10 p-6 rounded-2xl">
+                        <span class="text-gray-400 text-xs uppercase tracking-wider block mb-2">إجمالي الطلبات</span>
+                        <h3 id="stat-orders" class="text-3xl font-bold text-white">0</h3>
                     </div>
                 </div>
-
-                <a href="/" class="text-xs text-slate-400 hover:text-white font-bold"><i class="fas fa-store ml-1"></i> العودة للمتجر</a>
             </div>
-        </header>
 
-        <!-- Main Body -->
-        <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-10">
-
-            <!-- Order Management Section -->
-            <section class="bg-brandCard rounded-3xl p-6 border border-slate-800 shadow-xl">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl font-black flex items-center gap-2"><i class="fas fa-boxes-packing text-amber-500"></i> إدارة طلبات العملاء المباشرة</h2>
-                    <span id="orderCountBadge" class="text-xs font-bold bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full">0 طلبات</span>
+            <!-- PRODUCTS TAB -->
+            <div id="section-products" class="hidden space-y-8">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="font-serif text-3xl font-bold mb-2">إدارة المنتجات</h2>
+                        <p class="text-gray-400 text-sm">إضافة، تعديل أو حذف المنتجات وتحديث الأسعار فوراً.</p>
+                    </div>
+                    <button onclick="openProductModal()" class="bg-gold hover:bg-gold-dark text-black font-semibold px-6 py-3 rounded transition text-xs uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> إضافة منتج جديد
+                    </button>
                 </div>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right text-xs">
-                        <thead>
-                            <tr class="bg-brandDark text-amber-500 border-b border-slate-800">
-                                <th class="p-3">الرقم المرجعي</th>
-                                <th class="p-3">العميل والتليفون</th>
-                                <th class="p-3">العنوان والمحافظة</th>
-                                <th class="p-3">المنتجات والمقاسات</th>
-                                <th class="p-3">الإجمالي</th>
-                                <th class="p-3">البطاقة</th>
-                                <th class="p-3">حالة الطلب</th>
-                                <th class="p-3">إجراءات</th>
+                <div class="bg-surface border border-white/10 rounded-2xl overflow-x-auto">
+                    <table class="w-full text-right text-sm">
+                        <thead class="bg-obsidian/50 border-b border-white/10 text-gray-400 text-xs uppercase">
+                            <tr>
+                                <th class="p-4">المنتج</th>
+                                <th class="p-4">السعر</th>
+                                <th class="p-4">السعر القديم</th>
+                                <th class="p-4">المقاسات</th>
+                                <th class="p-4 text-center">الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody id="ordersTableBody" class="divide-y divide-slate-800 text-slate-300">
-                            <!-- Dynamic Orders -->
+                        <tbody id="products-table-body" class="divide-y divide-white/5">
+                            <!-- Populated dynamically -->
                         </tbody>
                     </table>
                 </div>
-            </section>
+            </div>
 
-            <!-- Product Management Section (CRUD) -->
-            <section class="bg-brandCard rounded-3xl p-6 border border-slate-800 shadow-xl">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-                    <h2 class="text-xl font-black flex items-center gap-2"><i class="fas fa-tshirt text-amber-500"></i> إدارة المنتجات والمخزون</h2>
-                    <button onclick="openAddProductModal()" class="py-2.5 px-4 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs flex items-center gap-2">
-                        <i class="fas fa-plus"></i> إضافة منتج جديد
-                    </button>
+            <!-- ORDERS TAB -->
+            <div id="section-orders" class="hidden space-y-8">
+                <div>
+                    <h2 class="font-serif text-3xl font-bold mb-2">إدارة الطلبات</h2>
+                    <p class="text-gray-400 text-sm">متابعة الطلبات، معاينة صور البطاقات، والتواصل عبر واتساب.</p>
                 </div>
-
-                <div id="adminProductGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <!-- Products dynamically rendered -->
+                <div class="bg-surface border border-white/10 rounded-2xl overflow-x-auto">
+                    <table class="w-full text-right text-sm">
+                        <thead class="bg-obsidian/50 border-b border-white/10 text-gray-400 text-xs uppercase">
+                            <tr>
+                                <th class="p-4">رقم / العميل</th>
+                                <th class="p-4">الهاتف والمحافظة</th>
+                                <th class="p-4">الإجمالي</th>
+                                <th class="p-4">الحالة</th>
+                                <th class="p-4">البطاقة</th>
+                                <th class="p-4 text-center">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body" class="divide-y divide-white/5">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
                 </div>
-            </section>
+            </div>
 
         </main>
     </div>
 
-    <!-- Image Preview Modal -->
-    <div id="imagePreviewModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="bg-brandCard max-w-lg w-full p-4 rounded-3xl relative">
-            <button onclick="closeImagePreview()" class="absolute top-3 left-3 text-white"><i class="fas fa-times text-xl"></i></button>
-            <img id="previewModalTargetImg" src="" class="w-full h-auto rounded-2xl max-h-[80vh] object-contain">
-        </div>
-    </div>
-
-    <!-- Add/Edit Product Modal -->
-    <div id="productFormModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-brandCard w-full max-w-lg rounded-3xl p-6 border border-slate-800 relative my-8">
-            <button onclick="closeProductModal()" class="absolute top-4 left-4 text-slate-400"><i class="fas fa-times text-xl"></i></button>
-            <h3 id="productModalTitle" class="text-lg font-black text-amber-500 mb-4">إضافة منتج جديد</h3>
-            
-            <form onsubmit="handleProductSubmit(event)" class="space-y-4">
-                <input type="hidden" id="prodEditId">
+    <!-- Product Add/Edit Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-surface border border-white/10 max-w-lg w-full rounded-2xl p-6 sm:p-8 relative my-8">
+            <button onclick="closeProductModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 id="product-modal-title" class="font-serif text-2xl font-bold text-white mb-6">إضافة منتج جديد</h3>
+            <form id="product-form" onsubmit="saveProduct(event)" class="space-y-4">
+                <input type="hidden" id="prod-id">
                 <div>
-                    <label class="block text-xs font-bold mb-1">اسم المنتج</label>
-                    <input type="text" id="prodName" required class="w-full bg-brandDark border border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-amber-500">
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">اسم المنتج *</label>
+                    <input type="text" id="prod-name" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold mb-1">السعر الحالي (ج.م)</label>
-                        <input type="number" id="prodPrice" required class="w-full bg-brandDark border border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-amber-500">
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">السعر (EGP) *</label>
+                        <input type="number" id="prod-price" required class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-1">السعر القديم (قبل الخصم)</label>
-                        <input type="number" id="prodOldPrice" class="w-full bg-brandDark border border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-amber-500">
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">السعر قبل الخصم</label>
+                        <input type="number" id="prod-old-price" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold mb-1">صورة المنتج (رفع تحويل Base64 أوتوماتيك)</label>
-                    <input type="file" id="prodImgFile" accept="image/*" onchange="handleProductImgUpload(event)" class="w-full text-xs text-slate-400 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500/10 file:text-amber-500">
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">مسار الصورة (مثال: t1.jpg أو رابط مباشر) *</label>
+                    <input type="text" id="prod-image" required value="t1.jpg" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold mb-1">الوصف والخامة</label>
-                    <textarea id="prodDesc" rows="2" class="w-full bg-brandDark border border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-amber-500"></textarea>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">الوصف</label>
+                    <textarea id="prod-desc" rows="2" class="w-full bg-obsidian border border-white/10 rounded px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold"></textarea>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold mb-2">كميات المخزون حسب المقاس:</label>
-                    <div class="grid grid-cols-5 gap-2 text-center text-xs">
-                        <div><span>S</span><input type="number" id="sizeS" value="5" class="w-full bg-brandDark border border-slate-700 rounded-lg p-2 text-center mt-1"></div>
-                        <div><span>M</span><input type="number" id="sizeM" value="5" class="w-full bg-brandDark border border-slate-700 rounded-lg p-2 text-center mt-1"></div>
-                        <div><span>L</span><input type="number" id="sizeL" value="5" class="w-full bg-brandDark border border-slate-700 rounded-lg p-2 text-center mt-1"></div>
-                        <div><span>XL</span><input type="number" id="sizeXL" value="5" class="w-full bg-brandDark border border-slate-700 rounded-lg p-2 text-center mt-1"></div>
-                        <div><span>XXL</span><input type="number" id="sizeXXL" value="0" class="w-full bg-brandDark border border-slate-700 rounded-lg p-2 text-center mt-1"></div>
-                    </div>
-                </div>
-                <button type="submit" class="w-full py-3 bg-amber-500 text-black font-black rounded-xl text-xs">حفظ المنتج</button>
+                <button type="submit" class="w-full bg-gold hover:bg-gold-dark text-black font-bold py-3.5 rounded transition uppercase tracking-wider text-sm mt-4">
+                    حفظ المنتج
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- Firebase Script Integration -->
+    <!-- ID Card Preview Modal -->
+    <div id="id-modal" class="fixed inset-0 z-50 bg-black/90 hidden items-center justify-center p-4">
+        <div class="relative max-w-2xl w-full">
+            <button onclick="closeIdModal()" class="absolute -top-10 left-0 text-white text-xl hover:text-gold"><i class="fa-solid fa-xmark"></i> إغلاق</button>
+            <img id="id-modal-img" src="" class="w-full rounded-xl border border-gold/40">
+        </div>
+    </div>
+
+    <!-- Firebase SDKs & Admin Logic -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getDatabase, ref, onValue, update, remove, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get, set, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAxdGkvwTeZSxkrgVSACgaoYrzaGLlcI0k",
@@ -184,230 +221,126 @@
             projectId: "test-t-bdfbe",
             storageBucket: "test-t-bdfbe.firebasestorage.app",
             messagingSenderId: "211509136380",
-            appId: "1:211509136380:web:139a6409a17bfb124bc079",
-            measurementId: "G-7MGWWZKEKW"
+            appId: "1:211509136380:web:139a6409a17bfb124bc079"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const auth = getAuth(app);
 
-        window.dbRef = db;
-        window.adminOrders = [];
-        window.adminProducts = [];
-        window.newProductBase64 = '';
+        let productsList = [];
+        let ordersList = [];
 
-        // Realtime Orders Listener
-        onValue(ref(db, 'orders'), (snapshot) => {
-            const data = snapshot.val();
-            window.adminOrders = data ? Object.values(data) : [];
-            renderOrdersTable();
-            calculateRevenue();
-        });
-
-        // Realtime Products Listener
-        onValue(ref(db, 'products'), (snapshot) => {
-            const data = snapshot.val();
-            window.adminProducts = data ? Object.values(data) : [];
-            renderAdminProducts();
-        });
-
-        window.updateOrderStatusInFirebase = function(orderId, status) {
-            update(ref(db, 'orders/' + orderId), { status: status });
-        };
-
-        window.deleteProductInFirebase = function(prodId) {
-            remove(ref(db, 'products/' + prodId));
-        };
-
-        window.saveProductToFirebase = function(prodData) {
-            set(ref(db, 'products/' + prodData.id), prodData);
-        };
-    </script>
-
-    <script>
-        function handleAdminLogin(e) {
-            e.preventDefault();
-            const pass = document.getElementById('adminPasscode').value;
-            if (pass === '7lbsaa2026') {
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('dashboardApp').classList.remove('hidden');
+        // Auth State
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                document.getElementById('admin-user-email').innerText = user.email;
+                loadDashboardData();
             } else {
-                alert('كلمة المرور غير صحيحة!');
+                document.getElementById('login-overlay').classList.remove('hidden');
+                document.getElementById('admin-dashboard').classList.add('hidden');
+            }
+        });
+
+        window.handleLogin = async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const pass = document.getElementById('admin-password').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (err) {
+                alert('فشل تسجيل الدخول: ' + err.message);
             }
         }
 
-        function calculateRevenue() {
-            const totalRevenue = (window.adminOrders || [])
-                .filter(o => o.status === 'تم التسليم')
-                .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
-
-            document.getElementById('currentRevenueCounter').innerText = `${totalRevenue} ج.م`;
-            document.getElementById('orderCountBadge').innerText = `${window.adminOrders.length} طلبات`;
+        window.handleLogout = async function() {
+            await signOut(auth);
         }
 
-        function renderOrdersTable() {
-            const tbody = document.getElementById('ordersTableBody');
-            if (window.adminOrders.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" class="text-center p-6 text-slate-500">لا توجد طلبات جارية حالياً.</td></tr>';
-                return;
-            }
+        window.switchTab = function(tab) {
+            ['overview', 'products', 'orders'].forEach(t => {
+                document.getElementById(`section-${t}`).classList.add('hidden'); document.getElementById(`tab-${t}`).className = "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 font-semibold text-sm transition";
+            });
+            document.getElementById(`section-${tab}`).classList.remove('hidden'); document.getElementById(`tab-${tab}`).className = "w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gold text-black font-semibold text-sm transition";
+        }
 
-            tbody.innerHTML = window.adminOrders.map(o => `
-                <tr class="hover:bg-brandDark/50">
-                    <td class="p-3 font-mono font-bold text-amber-500">${o.orderRef}</td>
-                    <td class="p-3">
-                        <div class="font-bold">${o.customerName}</div>
-                        <a href="https://wa.me/20${o.phone.replace(/^0/, '')}?text=أهلاً%20${o.customerName}%20بخصوص%20طلبك%20رقم%20${o.orderRef}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-400 hover:underline">
-                            <i class="fab fa-whatsapp"></i> ${o.phone}
-                        </a>
+        async function loadDashboardData() {
+            // Load Products
+            const prodSnap = await get(ref(db, 'products'));
+            if (prodSnap.exists()) {
+                productsList = Object.entries(prodSnap.val()).map(([id, val]) => ({ id, ...val }));
+            } else {
+                productsList = [];
+            }
+            renderProductsTable();
+
+            // Load Orders
+            const ordSnap = await get(ref(db, 'orders'));
+            if (ordSnap.exists()) {
+                ordersList = Object.entries(ordSnap.val()).map(([id, val]) => ({ id, ...val }));
+            } else {
+                ordersList = [];
+            }
+            renderOrdersTable();
+            calculateStats();
+        }
+
+        function calculateStats() {
+            document.getElementById('stat-products').innerText = productsList.length;
+            document.getElementById('stat-orders').innerText = ordersList.length;
+
+            let totalRevenue = 0;
+            ordersList.forEach(o => {
+                if (o.status === 'تم التسليم') {
+                    totalRevenue += Number(o.total || 0);
+                }
+            });
+            document.getElementById('stat-revenue').innerText = totalRevenue + ' EGP';
+        }
+
+        function renderProductsTable() {
+            const tbody = document.getElementById('products-table-body');
+            tbody.innerHTML = productsList.map(p => `
+                <tr class="hover:bg-white/5">
+                    <td class="p-4 flex items-center gap-3">
+                        <img src="${p.image}" class="w-12 h-12 object-cover rounded">
+                        <div>
+                            <div class="font-bold text-white">${p.name}</div>
+                            <div class="text-xs text-gray-400">ID: ${p.id}</div>
+                        </div>
                     </td>
-                    <td class="p-3">
-                        <div class="font-bold text-slate-300">${o.governorate}</div>
-                        <div class="text-[10px] text-slate-400 line-clamp-1">${o.address}</div>
-                    </td>
-                    <td class="p-3">
-                        ${(o.items || []).map(i => `<div class="text-[11px]">• ${i.name} (${i.size} - ${i.color}) × ${i.qty}</div>`).join('')}
-                    </td>
-                    <td class="p-3 font-bold text-amber-500">${o.totalAmount} ج.م</td>
-                    <td class="p-3">
-                        <button onclick="openImagePreview('${o.idCardImage}')" class="text-amber-500 text-xs hover:underline"><i class="fas fa-id-card ml-1"></i> عرض البطاقة</button>
-                    </td>
-                    <td class="p-3">
-                        <select onchange="changeOrderStatus('${o.id}', this.value)" class="bg-brandDark border border-slate-700 rounded-lg p-1.5 text-[11px] font-bold text-amber-400">
-                            <option value="تم استلام الطلب" ${o.status === 'تم استلام الطلب' ? 'selected' : ''}>تم استلام الطلب</option>
-                            <option value="قيد التجهيز" ${o.status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option>
-                            <option value="تم الشحن" ${o.status === 'تم الشحن' ? 'selected' : ''}>تم الشحن</option>
-                            <option value="تم التسليم" ${o.status === 'تم التسليم' ? 'selected' : ''}>تم التسليم</option>
-                            <option value="تم الإلغاء" ${o.status === 'تم الإلغاء' ? 'selected' : ''}>تم الإلغاء</option>
-                        </select>
-                    </td>
-                    <td class="p-3">
-                        <span class="text-[10px] text-slate-500">${new Date(o.timestamp).toLocaleDateString('ar-EG')}</span>
+                    <td class="p-4 text-gold font-bold">${p.price} EGP</td>
+                    <td class="p-4 text-gray-500">${p.oldPrice ? p.oldPrice + ' EGP' : '-'}</td>
+                    <td class="p-4 text-gray-300">${(p.sizes || ['S', 'M', 'L', 'XL']).join(', ')}</td>
+                    <td class="p-4 text-center space-x-2 space-x-reverse">
+                        <button onclick="editProduct('${p.id}')" class="text-gold hover:underline text-xs">تعديل</button>
+                        <button onclick="deleteProduct('${p.id}')" class="text-red-400 hover:underline text-xs">حذف</button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        function changeOrderStatus(orderId, newStatus) {
-            window.updateOrderStatusInFirebase(orderId, newStatus);
-        }
-
-        function renderAdminProducts() {
-            const grid = document.getElementById('adminProductGrid');
-            grid.innerHTML = (window.adminProducts || []).map(p => `
-                <div class="bg-brandDark p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
-                    <div>
-                        <img src="${p.img}" class="w-full h-36 object-contain rounded-xl mb-3 bg-black/20" onerror="this.src='https://placehold.co/400x400/121216/D4AF37?text=7lbsaa-t'">
-                        <h4 class="font-extrabold text-sm text-white mb-1">${p.name}</h4>
-                        <div class="text-amber-500 font-bold text-sm mb-2">${p.price} ج.م</div>
-                        <div class="text-[10px] text-slate-400 mb-3">المخزون: S:${p.sizes?.S || 0} | M:${p.sizes?.M || 0} | L:${p.sizes?.L || 0} | XL:${p.sizes?.XL || 0} | XXL:${p.sizes?.XXL || 0}</div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="editProduct('${p.id}')" class="flex-1 py-1.5 bg-slate-800 text-slate-200 rounded-lg text-xs font-bold hover:bg-slate-700">تعديل</button>
-                        <button onclick="deleteProduct('${p.id}')" class="py-1.5 px-3 bg-red-500/10 text-red-400 rounded-lg text-xs font-bold hover:bg-red-500/20"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openImagePreview(src) {
-            document.getElementById('previewModalTargetImg').src = src;
-            document.getElementById('imagePreviewModal').classList.remove('hidden');
-        }
-
-        function closeImagePreview() {
-            document.getElementById('imagePreviewModal').classList.add('hidden');
-        }
-
-        function openAddProductModal() {
-            document.getElementById('prodEditId').value = '';
-            document.getElementById('prodName').value = '';
-            document.getElementById('prodPrice').value = '';
-            document.getElementById('prodOldPrice').value = '';
-            document.getElementById('prodDesc').value = '';
-            window.newProductBase64 = '';
-            document.getElementById('productModalTitle').innerText = 'إضافة منتج جديد';
-            document.getElementById('productFormModal').classList.remove('hidden');
-        }
-
-        function closeProductModal() {
-            document.getElementById('productFormModal').classList.add('hidden');
-        }
-
-        function editProduct(id) {
-            const p = window.adminProducts.find(item => item.id === id);
-            if (!p) return;
-
-            document.getElementById('prodEditId').value = p.id;
-            document.getElementById('prodName').value = p.name;
-            document.getElementById('prodPrice').value = p.price;
-            document.getElementById('prodOldPrice').value = p.oldPrice || '';
-            document.getElementById('prodDesc').value = p.desc;
-            window.newProductBase64 = p.img;
-
-            document.getElementById('sizeS').value = p.sizes?.S || 0;
-            document.getElementById('sizeM').value = p.sizes?.M || 0;
-            document.getElementById('sizeL').value = p.sizes?.L || 0;
-            document.getElementById('sizeXL').value = p.sizes?.XL || 0;
-            document.getElementById('sizeXXL').value = p.sizes?.XXL || 0;
-
-            document.getElementById('productModalTitle').innerText = 'تعديل المنتج';
-            document.getElementById('productFormModal').classList.remove('hidden');
-        }
-
-        function deleteProduct(id) {
-            if (confirm('هل أنت تأكد من حذف هذا المنتج؟')) {
-                window.deleteProductInFirebase(id);
+        function renderOrdersTable() {
+            const tbody = document.getElementById('orders-table-body');
+            if (!ordersList.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-gray-500">لا توجد طلبات حتى الآن</td></tr>';
+                return;
             }
-        }
-
-        function handleProductImgUpload(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = 500;
-                    canvas.height = 500;
-                    ctx.drawImage(img, 0, 0, 500, 500);
-                    window.newProductBase64 = canvas.toDataURL('image/jpeg', 0.7);
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function handleProductSubmit(e) {
-            e.preventDefault();
-
-            const editId = document.getElementById('prodEditId').value;
-            const id = editId || ('p_' + Date.now());
-
-            const prodData = {
-                id: id,
-                name: document.getElementById('prodName').value,
-                category: 'تيشيرتات',
-                price: parseFloat(document.getElementById('prodPrice').value),
-                oldPrice: parseFloat(document.getElementById('prodOldPrice').value) || null,
-                desc: document.getElementById('prodDesc').value,
-                material: 'قطن مصري 100%',
-                img: window.newProductBase64 || 't1.jpg',
-                sizes: {
-                    S: parseInt(document.getElementById('sizeS').value) || 0,
-                    M: parseInt(document.getElementById('sizeM').value) || 0,
-                    L: parseInt(document.getElementById('sizeL').value) || 0,
-                    XL: parseInt(document.getElementById('sizeXL').value) || 0,
-                    XXL: parseInt(document.getElementById('sizeXXL').value) || 0
-                }
-            };
-
-            window.saveProductToFirebase(prodData);
-            closeProductModal();
-        }
-    </script>
-</body>
-</html>
+            tbody.innerHTML = ordersList.map(o => `
+                <tr class="hover:bg-white/5">
+                    <td class="p-4">
+                        <div class="font-bold text-white">${o.customerName}</div>
+                        <div class="text-xs text-gray-400">طلب #${o.id.slice(-6)}</div>
+                    </td>
+                    <td class="p-4">
+                        <div>${o.phone}</div>
+                        <div class="text-xs text-gold">${o.governorate} -${o.address}</div>
+                    </td>
+                    <td class="p-4 font-bold text-gold">${o.total} EGP</td>
+                    <td class="p-4">
+                        <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-obsidian border border-white/10 rounded px-2 py-1 text-xs text-white">
+                            <option value="جديد" ${o.status === 'جديد' ? 'selected' : ''}>جديد</option>
+                            <option value="قيد التجهيز" ${o.status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option>
+                            <option value="تم الشحن" ${o.status === 'تم الش
