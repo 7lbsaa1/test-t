@@ -3,117 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LUXE MEN — تيشيرتات رجالي فاخرة</title>
-<meta name="description" content="متجر تيشيرتات رجالي فاخر — جودة قطن مصري وقصص عصرية.">
-<link rel="stylesheet" href="/css/styles.css">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
-<script type="module" src="/js/app.js" defer></script>
+<title>TEES STORE | تيشيرتات رجالية</title>
+<meta name="description" content="متجر تيشيرتات رجالية - جودة عالية وأسعار مميزة">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+:root{--main:#ff6b00;--dark:#0f172a;--light:#f8fafc}
+body{background:var(--light);color:var(--dark)}
+
+/* ===== Navbar ===== */
+nav{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 2px 15px rgba(0,0,0,.08);display:flex;justify-content:space-between;align-items:center;padding:14px 5%}
+.logo{font-size:1.5rem;font-weight:900;color:var(--main)}
+.logo span{color:var(--dark)}
+nav ul{display:flex;gap:25px;list-style:none;align-items:center}
+nav a{text-decoration:none;color:var(--dark);font-weight:600;transition:.3s}
+nav a:hover{color:var(--main)}
+nav .login-link{background:var(--main);color:#fff !important;padding:8px 20px;border-radius:25px}
+
+/* ===== Hero ===== */
+.hero{background:linear-gradient(135deg,var(--dark),#1e293b);color:#fff;text-align:center;padding:90px 20px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;width:400px;height:400px;background:var(--main);border-radius:50%;filter:blur(150px);opacity:.25;top:-100px;right:-100px;animation:pulse 4s infinite alternate}
+@keyframes pulse{to{transform:scale(1.4)}}
+.hero h1{font-size:clamp(1.8rem,5vw,3.2rem);animation:fadeUp .8s}
+.hero p{margin:15px auto;color:#94a3b8;animation:fadeUp 1s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== Products ===== */
+.products{max-width:1200px;margin:60px auto;padding:0 5%}
+.section-title{text-align:center;font-size:2rem;margin-bottom:10px}
+.section-title b{color:var(--main)}
+.sub{text-align:center;color:#64748b;margin-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:30px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.08);opacity:0;transform:translateY(40px);transition:all .3s}
+.card.show{opacity:1;transform:translateY(0)}
+/* 🔍 معاينة التكبير عند مرور الماوس */
+.img-wrap{height:320px;overflow:hidden;cursor:zoom-in;position:relative}
+.img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.img-wrap:hover img{transform:scale(1.35)}
+.zoom-hint{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.6);color:#fff;font-size:.75rem;padding:4px 12px;border-radius:20px;opacity:0;transition:.3s}
+.img-wrap:hover .zoom-hint{opacity:1}
+.card-body{padding:18px}
+.card-body h3{font-size:1.1rem}
+.price{color:var(--main);font-weight:900;font-size:1.3rem;margin:8px 0}
+.old-price{color:#94a3b8;text-decoration:line-through;font-size:.9rem;margin-right:8px}
+.btn{display:block;width:100%;background:var(--main);color:#fff;border:none;padding:13px;border-radius:10px;font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:.3s}
+.btn:hover{background:#e55d00;transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,107,0,.35)}
+
+/* ===== Order Modal ===== */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;z-index:200;padding:15px}
+.modal.open{display:flex;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-content{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;padding:28px;animation:fadeUp .4s}
+.modal-content h2{color:var(--main);margin-bottom:5px}
+.modal-content .p-name{color:#64748b;margin-bottom:20px}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.9rem}
+input,select,textarea{width:100%;padding:12px;border:2px solid #e2e8f0;border-radius:10px;font-family:inherit;font-size:.95rem;outline:none;transition:.3s}
+input:focus,select:focus,textarea:focus{border-color:var(--main)}
+#cardPreview{display:none;max-width:100%;border-radius:10px;margin-top:10px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.submit-btn{margin-top:22px}
+.close-x{float:left;background:none;border:none;font-size:1.6rem;cursor:pointer;color:#94a3b8}
+.img-progress{display:none;margin-top:8px;font-size:.8rem;color:#059669}
+
+/* ===== Toast (تم تأكيد الأوردر) ===== */
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:15px 35px;border-radius:50px;font-weight:700;z-index:300;display:none;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.toast.show{display:block;animation:drop .5s}
+@keyframes drop{from{top:-60px}to{top:20px}}
+
+footer{background:var(--dark);color:#94a3b8;text-align:center;padding:30px;margin-top:80px}
+@media(max-width:640px){nav ul{gap:12px;font-size:.85rem}}
+</style>
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="container nav-inner">
-    <a class="logo" href="/">LUXE<span>MEN</span></a>
-    <div class="nav-links">
-      <a href="/">الرئيسية</a>
-      <a href="/#products">المنتجات</a>
-      <a href="/#features">لماذا نحن</a>
-      <a href="/#faq">الأسئلة الشائعة</a>
-    </div>
-    <button class="cart-btn" id="open-order">سلة الطلب 🛒 <span class="cart-badge" id="cart-badge">0</span></button>
-  </div>
+<nav>
+  <div class="logo">TEES<span>.STORE</span></div>
+  <ul>
+    <li><a href="/">الرئيسية</a></li>
+    <li><a href="/#products">المنتجات</a></li>
+    <li><a href="/login" class="login-link">تسجيل دخول الأدمن</a></li>
+  </ul>
 </nav>
 
-<header class="hero">
-  <div class="container">
-    <h1>أناقة الرجل <span>تبدأ من التفاصيل</span></h1>
-    <p>تيشيرتات رجالية فاخرة من قطن مصري مختار، بقصص عصرية وجودة تدوم.</p>
-    <a class="btn" href="#products">تسوق الآن</a>
-  </div>
-</header>
-
-<section id="products">
-  <div class="container">
-    <h2 class="section-title">تيشيرتاتنا</h2>
-    <div class="grid" id="products"></div>
-  </div>
+<section class="hero">
+  <h1>تيشيرتات رجالية 👑 بجودة مميزة</h1>
+  <p>أقمشة 100% قطن مصري — دفع عند الاستلام — توصيل لكل المحافظات</p>
 </section>
 
-<section id="best-section">
-  <div class="container">
-    <h2 class="section-title">الأكثر مبيعًا</h2>
-    <div class="grid" id="best"></div>
-  </div>
+<section class="products" id="products">
+  <h2 class="section-title">أحدث <b>التيشيرتات</b></h2>
+  <p class="sub">مرر الماوس على المنتج لمعاينة الصورة بالتكبير 🔍</p>
+  <div class="grid" id="grid"></div>
 </section>
 
-<section id="features">
-  <div class="container">
-    <h2 class="section-title">لماذا تختارنا؟</h2>
-    <div class="features">
-      <div class="feature reveal"><div class="icon">✦</div><h3>جودة فاخرة</h3><p>قطن مصري 100% وخياطة متينة.</p></div>
-      <div class="feature reveal"><div class="icon">✦</div><h3>طلب سهل</h3><p>اطلب مباشرة دون إنشاء حساب.</p></div>
-      <div class="feature reveal"><div class="icon">✦</div><h3>دعم فوري</h3><p>تواصل واتساب مباشر مع فريقنا.</p></div>
-      <div class="feature reveal"><div class="icon">✦</div><h3>شحن لكل مصر</h3><p>توصيل لجميع المحافظات.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="order-section" class="order-section">
-  <div class="container">
-    <h2 class="section-title">إتمام الطلب</h2>
-    <div class="order-wrap">
-      <form id="order-form" novalidate>
-        <label class="required" for="f-name">الاسم الكامل</label>
-        <input id="f-name" name="name" required autocomplete="name">
-        <label class="required" for="f-phone">رقم الهاتف (واتساب)</label>
-        <input id="f-phone" name="phone" inputmode="numeric" placeholder="01xxxxxxxxx" required>
-        <label class="required" for="f-gov">المحافظة</label>
-        <input id="f-gov" name="gov" required>
-        <label class="required" for="f-city">المدينة / المركز</label>
-        <input id="f-city" name="city" required>
-        <label class="required" for="f-address">العنوان التفصيلي</label>
-        <textarea id="f-address" name="address" rows="2" required></textarea>
-        <label for="f-landmark">أقرب علامة مميزة (اختياري)</label>
-        <input id="f-landmark" name="landmark">
-        <label for="f-idimage">صورة البطاقة الشخصية (اختياري — تُضغط وتُرسل بشكل آمن)</label>
-        <input id="f-idimage" name="idImage" type="file" accept="image/jpeg,image/png,image/webp">
-        <p class="progress" id="img-progress"></p>
-        <button class="btn" id="submit-btn" type="submit">تأكيد الطلب</button>
-        <div id="order-result"></div>
-      </form>
-      <aside>
-        <h3 style="margin-bottom:.8rem">ملخص الطلب</h3>
-        <div id="cart-items"></div>
-        <p class="cart-summary">الإجمالي: <span id="cart-total">0</span></p>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="container">
-    <h2 class="section-title">الأسئلة الشائعة والسياسات</h2>
-    <div class="faq">
-      <div class="faq-item"><button class="faq-q">كيف أتابع طلبي؟</button><div class="faq-a"><p>بعد إرسال الطلب ستحصل على رقم طلب تسلسلي، ويمكنك مراسلتنا على واتساب بذكر الرقم لمعرفة حالته.</p></div></div>
-      <div class="faq-item"><button class="faq-q">كم تستغرق مدة الشحن؟</button><div class="faq-a"><p>من 2 إلى 5 أيام عمل حسب المحافظة.</p></div></div>
-      <div class="faq-item"><button class="faq-q">ما هي سياسة الاستبدال والاسترجاع؟</button><div class="faq-a"><p>يمكنك الاستبدال خلال 14 يومًا من الاستلام بشرط أن يكون المنتج بحالته الأصلية ولم يُستخدم، ولمرة واحدة لكل طلب. الاسترجاع النقدي غير متاح، والبديل هو الاستبدال أو رصيد شرائي بنفس القيمة.</p></div></div>
-      <div class="faq-item"><button class="faq-q">هل أحتاج إنشاء حساب؟</button><div class="faq-a"><p>لا، الطلب يتم مباشرة ببياناتك الأساسية فقط.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container footer-grid">
-    <div><h4>LUXE<span style="color:var(--gold)">MEN</span></h4><p>تيشيرتات رجالية فاخرة بجودة تستحقها.</p></div>
-    <div><h4>روابط</h4><p><a href="/">الرئيسية</a><br><a href="/#products">المنتجات</a><br><a href="/#faq">السياسات</a></p></div>
-    <div><h4>تواصل معنا</h4><p>واتساب: 01xxxxxxxxx<br>البريد: info@luxemen.example</p></div>
-  </div>
-  <p class="copy">© 2026 LUXE MEN — جميع الحقوق محفوظة</p>
-</footer>
-
-<div id="lightbox" tabindex="-1"><button id="lightbox-close" aria-label="إغلاق">✕</button><img id="lightbox-img" alt=""></div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-</body>
-</html>
+<!-- نموذج الطلب -->
+<div class="modal" id="orderModal">
+  <div class="modal-content">
+    <button class="close-x" onclick="closeModal()">✕</button>
+    <h2>إتمام الطلب 🛒</h2>
+    <p class="p-name">المنتج: <b id="mProduct"></b></p>
+    <form id="orderForm">
+      <label>الاسم بالكامل *</label>
+      <input type="text" id="oName" required maxlength="60" autocomplete="name">
+      <label>رقم الهاتف (واتساب) *</label>
+      <input type="tel" id="oPhone" required pattern="01[0-9]{9}" maxlength="11" placeholder="01xxxxxxxxx" autocomplete="tel">
+      <label>المحافظة *</label>
+      <select id="oGov" required>
+        <option value="">اختر المحافظة</option>
+        <option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option>
+        <option>الشرقية</option><option>الدقهلية</option><option>المنوفية</option>
+        <option>الغربية</option><option>البحيرة</option><option>ب
