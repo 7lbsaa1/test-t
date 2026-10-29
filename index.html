@@ -1,115 +1,210 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEES STORE | تيشيرتات رجالية</title>
-<meta name="description" content="متجر تيشيرتات رجالية - جودة عالية وأسعار مميزة">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
-:root{--main:#ff6b00;--dark:#0f172a;--light:#f8fafc}
-body{background:var(--light);color:var(--dark)}
-
-/* ===== Navbar ===== */
-nav{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 2px 15px rgba(0,0,0,.08);display:flex;justify-content:space-between;align-items:center;padding:14px 5%}
-.logo{font-size:1.5rem;font-weight:900;color:var(--main)}
-.logo span{color:var(--dark)}
-nav ul{display:flex;gap:25px;list-style:none;align-items:center}
-nav a{text-decoration:none;color:var(--dark);font-weight:600;transition:.3s}
-nav a:hover{color:var(--main)}
-nav .login-link{background:var(--main);color:#fff !important;padding:8px 20px;border-radius:25px}
-
-/* ===== Hero ===== */
-.hero{background:linear-gradient(135deg,var(--dark),#1e293b);color:#fff;text-align:center;padding:90px 20px;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;width:400px;height:400px;background:var(--main);border-radius:50%;filter:blur(150px);opacity:.25;top:-100px;right:-100px;animation:pulse 4s infinite alternate}
-@keyframes pulse{to{transform:scale(1.4)}}
-.hero h1{font-size:clamp(1.8rem,5vw,3.2rem);animation:fadeUp .8s}
-.hero p{margin:15px auto;color:#94a3b8;animation:fadeUp 1s}
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-
-/* ===== Products ===== */
-.products{max-width:1200px;margin:60px auto;padding:0 5%}
-.section-title{text-align:center;font-size:2rem;margin-bottom:10px}
-.section-title b{color:var(--main)}
-.sub{text-align:center;color:#64748b;margin-bottom:40px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:30px}
-.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.08);opacity:0;transform:translateY(40px);transition:all .3s}
-.card.show{opacity:1;transform:translateY(0)}
-/* 🔍 معاينة التكبير عند مرور الماوس */
-.img-wrap{height:320px;overflow:hidden;cursor:zoom-in;position:relative}
-.img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-.img-wrap:hover img{transform:scale(1.35)}
-.zoom-hint{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.6);color:#fff;font-size:.75rem;padding:4px 12px;border-radius:20px;opacity:0;transition:.3s}
-.img-wrap:hover .zoom-hint{opacity:1}
-.card-body{padding:18px}
-.card-body h3{font-size:1.1rem}
-.price{color:var(--main);font-weight:900;font-size:1.3rem;margin:8px 0}
-.old-price{color:#94a3b8;text-decoration:line-through;font-size:.9rem;margin-right:8px}
-.btn{display:block;width:100%;background:var(--main);color:#fff;border:none;padding:13px;border-radius:10px;font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:.3s}
-.btn:hover{background:#e55d00;transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,107,0,.35)}
-
-/* ===== Order Modal ===== */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;z-index:200;padding:15px}
-.modal.open{display:flex;animation:fadeIn .3s}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal-content{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;padding:28px;animation:fadeUp .4s}
-.modal-content h2{color:var(--main);margin-bottom:5px}
-.modal-content .p-name{color:#64748b;margin-bottom:20px}
-label{display:block;font-weight:600;margin:14px 0 6px;font-size:.9rem}
-input,select,textarea{width:100%;padding:12px;border:2px solid #e2e8f0;border-radius:10px;font-family:inherit;font-size:.95rem;outline:none;transition:.3s}
-input:focus,select:focus,textarea:focus{border-color:var(--main)}
-#cardPreview{display:none;max-width:100%;border-radius:10px;margin-top:10px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
-.submit-btn{margin-top:22px}
-.close-x{float:left;background:none;border:none;font-size:1.6rem;cursor:pointer;color:#94a3b8}
-.img-progress{display:none;margin-top:8px;font-size:.8rem;color:#059669}
-
-/* ===== Toast (تم تأكيد الأوردر) ===== */
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:15px 35px;border-radius:50px;font-weight:700;z-index:300;display:none;box-shadow:0 10px 30px rgba(0,0,0,.3)}
-.toast.show{display:block;animation:drop .5s}
-@keyframes drop{from{top:-60px}to{top:20px}}
-
-footer{background:var(--dark);color:#94a3b8;text-align:center;padding:30px;margin-top:80px}
-@media(max-width:640px){nav ul{gap:12px;font-size:.85rem}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeeStore — تيشرتات رجالية</title>
+  <meta name="description" content="متجر TeeStore — تيشرتات رجالية قطن 100%، توصيل لكل المحافظات، دفع عند الاستلام">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
+  <div class="track-banner" id="track-banner">
+    <div class="container">
+      <span id="track-text">طلبيق —</span>
+      <ul id="track-timeline"></ul>
+      <button class="btn-outline btn" id="lookup-btn" style="padding:6px 18px">استعلام برقم الطلب</button>
+    </div>
+  </div>
 
-<nav>
-  <div class="logo">TEES<span>.STORE</span></div>
-  <ul>
-    <li><a href="/">الرئيسية</a></li>
-    <li><a href="/#products">المنتجات</a></li>
-    <li><a href="/login" class="login-link">تسجيل دخول الأدمن</a></li>
-  </ul>
-</nav>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="logo">Tee<span>Store</span></a>
+      <button class="burger" aria-label="القائمة"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a href="/">الرئيسية</a>
+        <a href="#products">منتجاتنا</a>
+        <a href="/about">من نحن</a>
+        <a href="/contact">تواصل معنا</a>
+        <a href="#products" class="btn" style="padding:8px 22px">اطلب الآن</a>
+      </div>
+    </div>
+  </nav>
 
-<section class="hero">
-  <h1>تيشيرتات رجالية 👑 بجودة مميزة</h1>
-  <p>أقمشة 100% قطن مصري — دفع عند الاستلام — توصيل لكل المحافظات</p>
-</section>
+  <header class="hero">
+    <div class="container">
+      <div>
+        <h1 class="hero-title" aria-label="تيشرتات رجالية جودة تدوم"></h1>
+        <p class="hero-sub">تيشرتات رجالية من القطن الخالص بتصاميم عصرية. توصيل لكل محافظات مصر، دفع عند الاستلام، واستبدال خلال 14 يوم.</p>
+        <a href="#products" class="btn">تسوق الآن</a>
+        <a href="#features" class="btn btn-outline">اعرف المزيد</a>
+      </div>
+      <img class="hero-img" src="/assets/img/t1.jpg" alt="تيشرت رجالي" width="520" height="520" fetchpriority="high">
+    </div>
+  </header>
 
-<section class="products" id="products">
-  <h2 class="section-title">أحدث <b>التيشيرتات</b></h2>
-  <p class="sub">مرر الماوس على المنتج لمعاينة الصورة بالتكبير 🔍</p>
-  <div class="grid" id="grid"></div>
-</section>
+  <section class="features" id="features">
+    <div class="container features-grid">
+      <div class="feature reveal">
+        <svg viewBox="0 0 24 24"><path d="M3 16v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2M3 16l3-9h12l3 9M3 16h18"/></svg>
+        <span class="num" data-count="27">0</span>
+        <p>محافظة نوصّل لها</p>
+      </div>
+      <div class="feature reveal">
+        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+        <p>دفع عند الاستلام</p>
+      </div>
+      <div class="feature reveal">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.5 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg>
+        <span class="num" data-count="100">0</span><p>% قطن خالص</p>
+      </div>
+      <div class="feature reveal">
+        <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        <span class="num" data-count="14">0</span><p>يوم للاستبدال</p>
+      </div>
+    </div>
+  </section>
 
-<!-- نموذج الطلب -->
-<div class="modal" id="orderModal">
-  <div class="modal-content">
-    <button class="close-x" onclick="closeModal()">✕</button>
-    <h2>إتمام الطلب 🛒</h2>
-    <p class="p-name">المنتج: <b id="mProduct"></b></p>
-    <form id="orderForm">
-      <label>الاسم بالكامل *</label>
-      <input type="text" id="oName" required maxlength="60" autocomplete="name">
-      <label>رقم الهاتف (واتساب) *</label>
-      <input type="tel" id="oPhone" required pattern="01[0-9]{9}" maxlength="11" placeholder="01xxxxxxxxx" autocomplete="tel">
-      <label>المحافظة *</label>
-      <select id="oGov" required>
-        <option value="">اختر المحافظة</option>
-        <option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option>
-        <option>الشرقية</option><option>الدقهلية</option><option>المنوفية</option>
-        <option>الغربية</option><option>البحيرة</option><option>ب
+  <section class="products" id="products">
+    <div class="container">
+      <h2 class="section-title reveal">منتجاتنا</h2>
+      <div class="products-grid">
+        <!-- كرت واحد يتكرر 6 مرات -->
+        <article class="product-card reveal">
+          <div class="product-image">
+            <img src="/assets/img/t1.jpg" alt="تيشرت كلاسيك أسود" loading="lazy" decoding="async" width="600" height="600" onload="this.classList.add('loaded')">
+            <div class="zoom-lens" aria-hidden="true"></div>
+          </div>
+          <div class="product-info">
+            <h3>تيشرت كلاسيك أسود</h3>
+            <p class="price">350 جنيه</p>
+            <p class="sizes">S · M · L · XL · XXL</p>
+            <button class="btn btn-order wide" data-id="t1" data-title="تيشرت كلاسيك أسود" data-price="350">اطلب</button>
+          </div>
+        </article>
+        <article class="product-card reveal">
+          <div class="product-image">
+            <img src="/assets/img/t2.jpg" alt="تيشرت أبيض سادة" loading="lazy" decoding="async" width="600" height="600" onload="this.classList.add('loaded')">
+            <div class="zoom-lens" aria-hidden="true"></div>
+          </div>
+          <div class="product-info">
+            <h3>تيشرت أبيض سادة</h3>
+            <p class="price">320 جنيه</p>
+            <p class="sizes">S · M · L · XL · XXL</p>
+            <button class="btn btn-order wide" data-id="t2" data-title="تيشرت أبيض سادة" data-price="320">اطلب</button>
+          </div>
+        </article>
+        <article class="product-card reveal">
+          <div class="product-image">
+            <img src="/assets/img/t3.jpg" alt="تيشرت بولو" loading="lazy" decoding="async" width="600" height="600" onload="this.classList.add('loaded')">
+            <div class="zoom-lens" aria-hidden="true"></div>
+          </div>
+          <div class="product-info">
+            <h3>تيشرت بولو</h3>
+            <p class="price">420 جنيه</p>
+            <p class="sizes">S · M · L · XL · XXL</p>
+            <button class="btn btn-order wide" data-id="t3" data-title="تيشرت بولو" data-price="420">اطلب</button>
+          </div>
+        </article>
+        <article class="product-card reveal">
+          <div class="product-image">
+            <img src="/assets/img/t4.jpg" alt="تيشرت أوفرسايز" loading="lazy" decoding="async" width="600" height="600" onload="this.classList.add('loaded')">
+            <div class="zoom-lens" aria-hidden="true"></div>
+          </div>
+          <div class="product-info">
+            <h3>تيشرت أوفرسايز</h3>
+            <p class="price">390 جنيه</p>
+            <p class="sizes">S · M · L · XL · XXL</p>
+            <button class="btn btn-order wide" data-id="t4" data-title="تيشرت أوفرسايز" data-price="390">اطلب</button>
+          </div>
+        </article>
+        <article class="product-card reveal">
+          <div class="product-image">
+            <img src="/assets/img/t5.jpg" alt="تيشرت رياضي" loading="lazy" decoding="async" width="600" height="600" onload="this.classList.add('loaded')">
+            <div class="zoom-lens" aria-hidden="true"></div>
+          </div>
+          <div class="product-info">
+            <h3>تيشرت رياضي</h3>
+            <p class="price">370 جنيه</p>
+            <p class="sizes">S · M · L · XL · XXL</p>
+            <button class="btn btn-order wide" data-id="t5" data-title="تيشرت رياضي" data-price="370">اطلب</button>
+          </div>
+        </article>
+        <article class="product-card reveal">
+          <div class="product-image">
+            <img src="/assets/img/t6.jpg" alt="تيشرت مطبوع" loading="lazy" decoding="async" width="600" height="600" onload="this.classList.add('loaded')">
+            <div class="zoom-lens" aria-hidden="true"></div>
+          </div>
+          <div class="product-info">
+            <h3>تيشرت مطبوع</h3>
+            <p class="price">440 جنيه</p>
+            <p class="sizes">S · M · L · XL · XXL</p>
+            <button class="btn btn-order wide" data-id="t6" data-title="تيشرت مطبوع" data-price="440">اطلب</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <div class="container">
+      <h2 class="section-title reveal">آراء العملاء</h2>
+      <div class="reviews-viewport">
+        <div class="reviews-track">
+          <div class="review-card"><span class="stars">★★★★★</span><p>"جودة الخامة ممتازة جداً، الوصل سريع والتعامل محترم. هكرر الطلب أكيد."</p><span class="who">— أحمد م.</span></div>
+          <div class="review-card"><span class="stars">★★★★★</span><p>"أول مرة أطلب أونلاين وكنت متوترة، بس الطلب وصل بدري والقياس مظبوط."</p><span class="who">— محمد ص.</span></div>
+          <div class="review-card"><span class="stars">★★★★★</span><p>"الأسعار ممتازة مقابل الجودة، وخدمة العملاء ترد فوراً على الواتساب."</p><span class="who">— كريم ع.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><h4>TeeStore</h4><p>تيشرتات رجالية بجودة تدوم.</p></div>
+      <div><h4>روابط</h4><a href="/">الرئيسية</a><br><a href="/about">من نحن</a><br><a href="/contact">تواصل</a></div>
+      <div><h4>تواصل</h4><a href="https://wa.me/201234567890">واتساب: 01234567890</a><br><a href="#" rel="noopener">فيسبوك</a> · <a href="#" rel="noopener">إنستجرام</a></div>
+    </div>
+    <p class="copyright">© 2026 TeeStore — جميع الحقوق محفوظة</p>
+  </footer>
+
+  <!-- Modal الطلب -->
+  <div class="modal" id="order-modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <h2>إتمام الطلب</h2>
+      <p id="order-product" style="color:var(--accent);font-weight:700"></p>
+      <form id="order-form" novalidate>
+        <div class="field"><label for="name">الاسم بالكامل *</label><input id="name" maxlength="60" required></div>
+        <div class="field"><label for="phone">رقم الهاتف *</label><input id="phone" type="tel" maxlength="11" inputmode="numeric" placeholder="01xxxxxxxxx" required><span class="err" id="phone-err"></span></div>
+        <div class="field"><label for="gov">المحافظة *</label><select id="gov" required><option value="">اختر المحافظة</option></select><span id="shipping-display" style="color:var(--muted);font-size:.8rem"></span></div>
+        <div class="field"><label for="address">العنوان التفصيلي *</label><textarea id="address" maxlength="300" rows="3" required></textarea></div>
+        <div class="field"><label for="size">المقاس *</label><select id="size"><option>S</option><option selected>M</option><option>L</option><option>XL</option><option>XXL</option></select></div>
+        <div class="field"><label for="qty">الكمية</label><input id="qty" type="number" min="1" max="10" value="1"></div>
+        <div class="field"><label for="idcard">صورة البطاقة (اختياري)</label><input id="idcard" type="file" accept="image/*" capture="environment"><div id="img-progress"><div id="img-progress-bar"></div></div><img id="img-preview" alt="معاينة البطاقة"><span class="err" id="img-err"></span></div>
+        <div class="field"><label for="notes">ملاحظات</label><textarea id="notes" maxlength="300" rows="2"></textarea></div>
+        <span class="err" id="form-err"></span>
+        <button type="submit" class="btn wide" id="order-submit">تأكيد الطلب</button>
+      </form>
+      <button class="btn btn-outline" id="order-close">إلغاء</button>
+    </div>
+  </div>
+
+  <!-- شاشة النجاح -->
+  <div class="modal" id="success-screen" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <h2>تم استلام طلبك 🎉</h2>
+      <p>رقم الطلب</p>
+      <p id="success-num">#0000</p>
+      <p id="success-total"></p>
+      <div class="success-actions">
+        <button class="btn" onclick="location.reload()">تتبع طلبي</button>
+        <a class="btn btn-outline" id="wa-success" href="#" target="_blank" rel="noopener">تواصل واتساب</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="/assets/js/guard404.js"></script>
+</body>
+</html>
