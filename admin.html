@@ -1,54 +1,77 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>لوحة الإدارة — LUXE MEN</title>
-<link rel="stylesheet" href="/css/styles.css">
-<link rel="stylesheet" href="/css/admin.css">
-<script type="module" src="/js/admin.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeeStore — لوحة التحكم</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
 <body>
-<div id="auth-box">
-  <div class="auth-card">
-    <h2>تسجيل دخول الأدمن</h2>
+  <div id="auth-screen">
     <form id="login-form">
-      <label for="a-email">البريد الإلكتروني</label>
-      <input id="a-email" name="email" type="email" required autocomplete="username">
-      <label for="a-pass">كلمة المرور</label>
-      <input id="a-pass" name="password" type="password" required autocomplete="current-password">
-      <button class="btn" type="submit">دخول</button>
-      <p class="error" id="login-error"></p>
+      <h2>دخول الأدمن</h2>
+      <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+      <input type="password" id="pass" placeholder="كلمة المرور" required>
+      <button type="submit" class="btn">دخول</button>
+      <span class="err" id="login-err"></span>
     </form>
   </div>
-</div>
 
-<div id="admin-panel" style="display:none">
-  <nav class="navbar"><div class="container nav-inner">
-    <a class="logo" href="/">LUXE<span>MEN</span> — الإدارة</a>
-    <button class="cart-btn" id="logout-btn">تسجيل الخروج</button>
-  </div></nav>
+  <div id="dashboard" style="display:none">
+    <nav class="admin-nav">
+      <h2 style="margin:0">TeeStore <span style="color:var(--accent)">أدمن</span></h2>
+      <button class="btn" id="logout" style="padding:8px 22px">خروج</button>
+    </nav>
 
-  <section class="container">
-    <h2 class="section-title">الإحصائيات</h2>
     <div class="stats">
-      <div class="stat"><b id="st-total">0</b><span>إجمالي الطلبات</span></div>
-      <div class="stat"><b id="st-new">0</b><span>طلبات جديدة</span></div>
-      <div class="stat"><b id="st-prep">0</b><span>جاري التجهيز</span></div>
-      <div class="stat"><b id="st-shipped">0</b><span>تم الشحن</span></div>
-      <div class="stat"><b id="st-delivered">0</b><span>تم التوصيل</span></div>
-      <div class="stat"><b id="st-cancelled">0</b><span>ملغاة / متعذرة</span></div>
-      <div class="stat gold"><b id="st-sales">0</b><span>مبيعات الطلبات المكتملة</span></div>
+      <div class="stat"><b id="stat-total">0</b>كل الطلبات</div>
+      <div class="stat"><b id="stat-today">0</b>طلبات اليوم</div>
+      <div class="stat"><b id="stat-prep">0</b>قيد التجهيز</div>
+      <div class="stat"><b id="stat-done">0</b>تم التوصيل</div>
+      <div class="stat"><b id="stat-sales">0</b>إجمالي المبيعات (ج)</div>
     </div>
-  </section>
 
-  <section class="container">
-    <h2 class="section-title">إدارة الطلبات</h2>
-    <div class="filters">
-      <input id="search" placeholder="بحث برقم الطلب أو الاسم أو الهاتف">
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="بحث بالاسم / الهاتف / رقم الطلب">
       <select id="filter-status">
-        <option value="">كل الحالات</option>
-        <option>جديد</option><option>تم تأكيد الطلب</option><option>جاري التجهيز</option>
-        <option>تم التجهيز</option><option>تم الشحن</option><option>خرج للتوصيل</option>
-        <option>تم التوصيل</option><option>تم الإلغاء</option><option>تعذر التس
+        <option value="all">كل الحالات</option>
+        <option value="pending">بانتظار التأكيد</option>
+        <option value="confirmed">تم التأكيد</option>
+        <option value="preparing">قيد التجهيز</option>
+        <option value="ready">جاهز للشحن</option>
+        <option value="shipped">تم الشحن</option>
+        <option value="delivered">تم التوصيل</option>
+        <option value="cancelled">ملغي</option>
+      </select>
+      <button class="btn" id="export-csv">تصدير CSV</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th id="th-num"># ↓</th><th>الاسم</th><th>الهاتف</th><th>المحافظة</th><th>الإجمالي</th><th>الحالة</th><th>التاريخ</th><th>إجراءات</th></tr></thead>
+        <tbody id="orders-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Modal تفاصيل الطلب -->
+    <div class="modal" id="detail-modal">
+      <div class="modal-box">
+        <button class="btn" id="detail-close" style="float:left;padding:6px 14px">✕</button>
+        <h2>تفاصيل الطلب</h2>
+        <div id="detail-body"></div>
+        <h3 style="margin-top:16px">صورة البطاقة</h3>
+        <div id="detail-idcard"></div>
+        <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+          <a id="detail-wa" href="#" target="_blank" rel="noopener" class="btn">واتساب العميل</a>
+          <button class="btn btn-outline" id="detail-pdf">تحميل PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/assets/js/admin.js"></script>
+  <script type="module" src="/assets/js/guard404.js"></script>
+</body>
+</html>
